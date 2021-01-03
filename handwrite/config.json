@@ -1,8 +1,8 @@
 {
   "props": {
-    "ascent": 96,
-    "descent": 32,
-    "em": 128,
+    "ascent": 20,
+    "descent": 35,
+    "em": 60,
     "encoding": "UnicodeFull",
     "lang": "English (US)",
     "family": "Example",
