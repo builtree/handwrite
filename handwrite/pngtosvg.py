@@ -3,7 +3,7 @@ import os
 import subprocess
 
 
-class PicturesToFont:
+class PngToSvg:
     def __init__(self, directory=None, font_name="", config={}):
         path = os.walk(directory)
         for root, dirs, files in path:

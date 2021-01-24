@@ -86,11 +86,11 @@ class SheetToPNG:
                     break
 
 
-if __name__ == "__main__":
-    directory = os.path.dirname(os.getcwd())
-    a = SheetToPNG(
-        sheet=os.path.join(directory, "sheets", "didi.jpg"),
-        letters_dir=os.path.join(directory, "letters"),
-        cols=7,
-        rows=9,
-    )
+# if __name__ == "__main__":
+#     directory = os.path.dirname(os.getcwd())
+#     a = SheetToPNG(
+#         sheet=os.path.join(directory, "sheets", "didi.jpg"),
+#         letters_dir=os.path.join(directory, "letters"),
+#         cols=7,
+#         rows=9,
+#     )

@@ -1,0 +1,855 @@
+{
+  "props": {
+    "ascent": 800,
+    "descent": 200,
+    "em": 1000,
+    "encoding": "UnicodeFull",
+    "lang": "English (US)",
+    "family": "Example",
+    "style": "Regular",
+    "familyname": "Example",
+    "fontname": "Example-Regular",
+    "fullname": "Example Regular"
+  },
+  "glyphs": {
+    "A": "aa/A.svg",
+    "B": "bb/B.svg",
+    "C": "cc/C.svg",
+    "D": "dd/D.svg",
+    "E": "ee/E.svg",
+    "F": "ff/F.svg",
+    "G": "gg/G.svg",
+    "H": "hh/H.svg",
+    "I": "ii/I.svg",
+    "J": "jj/J.svg",
+    "K": "kk/K.svg",
+    "L": "ll/L.svg",
+    "M": "mm/M.svg",
+    "N": "nn/N.svg",
+    "O": "oo/O.svg",
+    "P": "pp/P.svg",
+    "Q": "qq/Q.svg",
+    "R": "rr/R.svg",
+    "S": "ss/S.svg",
+    "T": "tt/T.svg",
+    "U": "uu/U.svg",
+    "V": "vv/V.svg",
+    "W": "ww/W.svg",
+    "X": "xx/X.svg",
+    "Y": "yy/Y.svg",
+    "Z": "zz/Z.svg",
+    "a": "a/a.svg",
+    "b": "b/b.svg",
+    "c": "c/c.svg",
+    "d": "d/d.svg",
+    "e": "e/e.svg",
+    "f": "f/f.svg",
+    "g": "g/g.svg",
+    "h": "h/h.svg",
+    "i": "i/i.svg",
+    "j": "j/j.svg",
+    "k": "k/k.svg",
+    "l": "l/l.svg",
+    "m": "m/m.svg",
+    "n": "n/n.svg",
+    "o": "o/o.svg",
+    "p": "p/p.svg",
+    "q": "q/q.svg",
+    "r": "r/r.svg",
+    "s": "s/s.svg",
+    "t": "t/t.svg",
+    "u": "u/u.svg",
+    "v": "v/v.svg",
+    "w": "w/w.svg",
+    "x": "x/x.svg",
+    "y": "y/y.svg",
+    "z": "z/z.svg",
+    "0": "0/0.svg",
+    "1": "1/1.svg",
+    "2": "2/2.svg",
+    "3": "3/3.svg",
+    "4": "4/4.svg",
+    "5": "5/5.svg",
+    "6": "6/6.svg",
+    "7": "7/7.svg",
+    "8": "8/8.svg",
+    "9": "9/9.svg"
+  },
+  "bearing_table": {
+    "Default": [
+      60,
+      60
+    ],
+    "A": [
+      60,
+      -50
+    ],
+    "a": [
+      30,
+      40
+    ],
+    "B": [
+      60,
+      0
+    ],
+    "C": [
+      60,
+      -30
+    ],
+    "c": [
+      null,
+      40
+    ],
+    "b": [
+      null,
+      40
+    ],
+    "D": [
+      null,
+      10
+    ],
+    "d": [
+      30,
+      30
+    ],
+    "e": [
+      30,
+      40
+    ],
+    "E": [
+      70,
+      10
+    ],
+    "F": [
+      70,
+      0
+    ],
+    "f": [
+      0,
+      -20
+    ],
+    "G": [
+      60,
+      30
+    ],
+    "g": [
+      20,
+      60
+    ],
+    "h": [
+      40,
+      40
+    ],
+    "I": [
+      80,
+      50
+    ],
+    "i": [
+      null,
+      30
+    ],
+    "J": [
+      40,
+      30
+    ],
+    "j": [
+      -70,
+      40
+    ],
+    "k": [
+      40,
+      20
+    ],
+    "K": [
+      80,
+      0
+    ],
+    "H": [
+      null,
+      10
+    ],
+    "L": [
+      80,
+      10
+    ],
+    "l": [
+      null,
+      0
+    ],
+    "M": [
+      60,
+      30
+    ],
+    "m": [
+      40,
+      null
+    ],
+    "N": [
+      70,
+      10
+    ],
+    "n": [
+      30,
+      40
+    ],
+    "O": [
+      70,
+      10
+    ],
+    "o": [
+      40,
+      40
+    ],
+    "P": [
+      70,
+      0
+    ],
+    "p": [
+      null,
+      40
+    ],
+    "Q": [
+      70,
+      10
+    ],
+    "q": [
+      20,
+      30
+    ],
+    "R": [
+      70,
+      -10
+    ],
+    "r": [
+      null,
+      40
+    ],
+    "S": [
+      60,
+      60
+    ],
+    "s": [
+      20,
+      40
+    ],
+    "T": [
+      null,
+      -10
+    ],
+    "t": [
+      -10,
+      20
+    ],
+    "U": [
+      70,
+      20
+    ],
+    "u": [
+      40,
+      40
+    ],
+    "V": [
+      null,
+      -10
+    ],
+    "v": [
+      20,
+      20
+    ],
+    "W": [
+      70,
+      20
+    ],
+    "w": [
+      40,
+      40
+    ],
+    "X": [
+      null,
+      -10
+    ],
+    "x": [
+      10,
+      20
+    ],
+    "y": [
+      20,
+      30
+    ],
+    "Y": [
+      40,
+      0
+    ],
+    "Z": [
+      null,
+      -10
+    ],
+    "z": [
+      10,
+      20
+    ]
+  },
+  "kerning_table": {
+    "rows": [
+      null,
+      "f",
+      "t",
+      "i",
+      "r",
+      "k",
+      "l",
+      "v",
+      "bop",
+      "nm",
+      "a",
+      "W",
+      "T",
+      "F",
+      "P",
+      "g",
+      "qdhyj",
+      "cesuwxz",
+      "V",
+      "A",
+      "Y",
+      "MNHI",
+      "OQDU",
+      "J",
+      "C",
+      "E",
+      "L",
+      "P",
+      "KR",
+      "G",
+      "BSXZ"
+    ],
+    "cols": [
+      null,
+      "oacedgqw",
+      "ft",
+      "xvz",
+      "hbli",
+      "j",
+      "mnpru",
+      "k",
+      "y",
+      "s",
+      "T",
+      "F",
+      "Zero"
+    ],
+    "table": [
+      [
+        [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          null,
+          null,
+          0,
+          0,
+          null,
+          0
+        ],
+        [
+          0,
+          -30,
+          -61,
+          -20,
+          null,
+          0,
+          null,
+          null,
+          null,
+          0,
+          -150,
+          null,
+          -70
+        ],
+        [
+          0,
+          -50,
+          -41,
+          -20,
+          null,
+          0,
+          0,
+          null,
+          null,
+          0,
+          -150,
+          null,
+          -10
+        ],
+        [
+          null,
+          null,
+          -40,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          -150,
+          null,
+          null
+        ],
+        [
+          0,
+          -32,
+          -40,
+          null,
+          null,
+          0,
+          null,
+          null,
+          null,
+          0,
+          -170,
+          null,
+          29
+        ],
+        [
+          0,
+          -10,
+          -50,
+          null,
+          null,
+          0,
+          null,
+          null,
+          null,
+          -48,
+          -150,
+          null,
+          -79
+        ],
+        [
+          0,
+          -10,
+          -20,
+          null,
+          0,
+          0,
+          0,
+          null,
+          null,
+          0,
+          -110,
+          null,
+          -20
+        ],
+        [
+          0,
+          -40,
+          -35,
+          -15,
+          null,
+          0,
+          0,
+          null,
+          null,
+          0,
+          -170,
+          null,
+          30
+        ],
+        [
+          0,
+          null,
+          -40,
+          null,
+          0,
+          0,
+          0,
+          null,
+          null,
+          0,
+          -170,
+          null,
+          43
+        ],
+        [
+          null,
+          null,
+          -30,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          -170,
+          null,
+          null
+        ],
+        [
+          0,
+          -23,
+          -30,
+          null,
+          0,
+          0,
+          0,
+          null,
+          null,
+          0,
+          -170,
+          null,
+          7
+        ],
+        [
+          0,
+          -40,
+          -30,
+          -10,
+          null,
+          0,
+          0,
+          null,
+          null,
+          0,
+          null,
+          null,
+          null
+        ],
+        [
+          0,
+          -150,
+          -120,
+          -120,
+          -30,
+          -40,
+          -130,
+          null,
+          -100,
+          -80,
+          0,
+          null,
+          null
+        ],
+        [
+          0,
+          -90,
+          -90,
+          -70,
+          -30,
+          0,
+          -70,
+          null,
+          -50,
+          -80,
+          -40,
+          null,
+          null
+        ],
+        [
+          0,
+          -100,
+          -70,
+          -50,
+          null,
+          0,
+          -70,
+          null,
+          -30,
+          -80,
+          -20,
+          null,
+          null
+        ],
+        [
+          null,
+          null,
+          null,
+          null,
+          null,
+          40,
+          null,
+          null,
+          null,
+          null,
+          -120,
+          null,
+          null
+        ],
+        [
+          null,
+          null,
+          null,
+          null,
+          30,
+          30,
+          30,
+          30,
+          30,
+          null,
+          -100,
+          null,
+          null
+        ],
+        [
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          -120,
+          null,
+          null
+        ],
+        [
+          null,
+          -70,
+          30,
+          30,
+          null,
+          -80,
+          -20,
+          null,
+          -40,
+          -40,
+          -10,
+          null,
+          null
+        ],
+        [
+          null,
+          30,
+          60,
+          30,
+          30,
+          null,
+          20,
+          40,
+          20,
+          -80,
+          -120,
+          20,
+          20
+        ],
+        [
+          null,
+          20,
+          60,
+          30,
+          30,
+          null,
+          20,
+          20,
+          40,
+          20,
+          -10,
+          null,
+          null
+        ],
+        [
+          null,
+          20,
+          10,
+          40,
+          30,
+          null,
+          10,
+          20,
+          20,
+          null,
+          null,
+          null,
+          null
+        ],
+        [
+          null,
+          null,
+          50,
+          40,
+          30,
+          -20,
+          30,
+          20,
+          30,
+          null,
+          -70,
+          null,
+          null
+        ],
+        [
+          null,
+          null,
+          40,
+          20,
+          20,
+          -20,
+          10,
+          10,
+          30,
+          null,
+          -30,
+          null,
+          null
+        ],
+        [
+          null,
+          10,
+          40,
+          10,
+          30,
+          null,
+          30,
+          30,
+          20,
+          null,
+          -30,
+          null,
+          null
+        ],
+        [
+          null,
+          -10,
+          50,
+          null,
+          10,
+          -20,
+          10,
+          null,
+          20,
+          null,
+          null,
+          null,
+          null
+        ],
+        [
+          null,
+          -10,
+          -10,
+          null,
+          null,
+          -30,
+          null,
+          null,
+          20,
+          null,
+          -90,
+          null,
+          null
+        ],
+        [
+          null,
+          -50,
+          30,
+          20,
+          20,
+          null,
+          null,
+          20,
+          20,
+          null,
+          -30,
+          null,
+          null
+        ],
+        [
+          null,
+          20,
+          20,
+          20,
+          10,
+          null,
+          20,
+          20,
+          20,
+          null,
+          -60,
+          null,
+          null
+        ],
+        [
+          null,
+          20,
+          40,
+          30,
+          30,
+          null,
+          20,
+          20,
+          20,
+          null,
+          -100,
+          10,
+          null
+        ],
+        [
+          null,
+          20,
+          40,
+          30,
+          30,
+          null,
+          20,
+          20,
+          20,
+          20,
+          -20,
+          10,
+          null
+        ]
+      ]
+    ]
+  },
+  "sfnt_names": [
+    [
+      "English (US)",
+      "Copyright",
+      "Copyright (c) 2014 by Nobody"
+    ],
+    [
+      "English (US)",
+      "Family",
+      "Example"
+    ],
+    [
+      "English (US)",
+      "SubFamily",
+      "Regular"
+    ],
+    [
+      "English (US)",
+      "UniqueID",
+      "Example 2014-12-04"
+    ],
+    [
+      "English (US)",
+      "Fullname",
+      "Example Regular"
+    ],
+    [
+      "English (US)",
+      "Version",
+      "Version 001.000"
+    ],
+    [
+      "English (US)",
+      "PostScriptName",
+      "Example-Regular"
+    ]
+  ],
+  "input": ".",
+  "output": [
+    "../auto-kerning.ttf",
+    "../auto-kerning.svg",
+    "../auto-kerning.woff"
+  ],
+  "# vim: set et sw=2 ts=2 sts=2:": false
+}

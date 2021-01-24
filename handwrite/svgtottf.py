@@ -36,7 +36,7 @@ def setProperties(font, config):
         font.appendSFNTName(str(t[0]), str(t[1]), unicode(t[2]))
 
 
-def addGlyphs(font, config):
+def addGlyphs(font, config, directory):
     space = font.createMappedChar(ord(" "))
     space.width = 1000
 
@@ -46,7 +46,8 @@ def addGlyphs(font, config):
         src = "%s.svg" % k
         if not isinstance(v, dict):
             v = {"src": v or src}
-        src = "%s%s%s" % (config.get("input", "."), os.path.sep, v.pop("src", src))
+        # src = "%s%s%s" % (config.get("input", "."), os.path.sep, v.pop("src", src))
+        src = "%s%s" % (directory, v.pop("src", src))
         g.importOutlines(src, IMPORT_OPTIONS)
         g.removeOverlap()
         # Copy attributes
@@ -88,12 +89,12 @@ def setKerning(font, table):
     # print(font.getKerningClass("kern-1"))
 
 
-def main(config_file):
+def main(config_file, directory, outfile):
     config = loadConfig(config_file)
-    os.chdir(os.path.dirname(config_file) or ".")
+    # os.chdir(os.path.dirname(config_file) or ".")
     font = fontforge.font()
     setProperties(font, config)
-    addGlyphs(font, config)
+    addGlyphs(font, config, directory)
 
     # bearing table
     setBearings(font, config.get("bearing_table", {}))
@@ -101,13 +102,17 @@ def main(config_file):
     # kerning table
     setKerning(font, config.get("kerning_table", {}))
 
-    for outfile in config["output"]:
+    # for outfile in config["output"]:
+    #     sys.stderr.write("Generating %s...\n" % outfile)
+    #     font.generate(outfile)
     sys.stderr.write("Generating %s...\n" % outfile)
     font.generate(outfile)
 
 
 if __name__ == "__main__":
     if len(sys.argv) > 1:
-        main(sys.argv[1])
+        main(sys.argv[1], sys.argv[2], sys.argv[3])
     else:
-        sys.stderr.write("\nUsage: %s something.json\n" % sys.argv[0])
+        sys.stderr.write(
+            "\nUsage: %s something.json output_font_name.ttf" % sys.argv[0]
+        )
