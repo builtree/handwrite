@@ -19,6 +19,8 @@ class PicturesToFont:
     def pngToBmp(self, path):
         png = Image.open(path)
         img = png.convert("RGBA")
+        # Resizing char images to default size
+        img = img.resize((100, 100))
         data = list(img.getdata())
         threshold = 200
         newdata = []
