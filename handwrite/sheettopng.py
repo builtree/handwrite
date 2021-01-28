@@ -1,16 +1,39 @@
 import os
+import sys
 
 import cv2
 
 ASCII = list(map(chr, range(127)))
-# Seq: A-Z, a-z, 0-9, punctuation
+# Seq: A-Z, a-z, 0-9
 RANGES = [(65, 91), (97, 123), (48, 58)]
+SPECIAL_CHARACTERS = [
+    ".",
+    ",",
+    ";",
+    ":",
+    "!",
+    "?",
+    '"',
+    "'",
+    "-",
+    "+",
+    "=",
+    "/",
+    "%",
+    "&",
+    "(",
+    ")",
+    "[",
+    "]",
+]
 
 
 class SheetToPNG:
-    LETTER_NAMES = [item for start, end in RANGES for item in ASCII[start:end]] + ["."]
+    LETTER_NAMES = [
+        item for start, end in RANGES for item in ASCII[start:end]
+    ] + SPECIAL_CHARACTERS
 
-    def __init__(self, sheet, letters_dir, cols, rows=9):
+    def __init__(self, sheet, letters_dir, cols=8, rows=10):
         self.cols = cols
         self.rows = rows
 
@@ -26,15 +49,7 @@ class SheetToPNG:
 
     def detectLetters(self, sheet_image):
         image = cv2.imread(sheet_image)
-        letters = [[] for _ in range(self.rows)]
-
-        sheet_area = image.shape[0] * image.shape[1]
-        min_area = sheet_area / 110
-        max_area = sheet_area / 90
-        i = 0
-
         gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
-        # blurred = cv2.medianBlur(gray, 3)
 
         # kernel = np.array([[-1, -1, -1], [-1, 9, -1], [-1, -1, -1],])
         # filtered = cv2.filter2D(blurred, -1, kernel)
@@ -46,51 +61,56 @@ class SheetToPNG:
         contours, h = cv2.findContours(
             close, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE
         )
+        contours = sorted(
+            filter(
+                lambda cnt: len(
+                    cv2.approxPolyDP(cnt, 0.01 * cv2.arcLength(cnt, True), True)
+                )
+                == 4,
+                contours,
+            ),
+            key=cv2.contourArea,
+            reverse=True,
+        )
 
-        for cnt in contours:
-            approx = cv2.approxPolyDP(cnt, 0.01 * cv2.arcLength(cnt, True), True)
-            area = cv2.contourArea(cnt)
-            space = int(area ** 0.5 / 2.3)
+        x, y, w, h = cv2.boundingRect(contours[0])
+        space_h, space_w = 7 * h // 16, 7 * w // 16
 
-            if len(approx) == 4 and min_area < area < max_area:
-                x, y, w, h = cv2.boundingRect(cnt)
-                cx, cy = x + w // 2, y + h // 2
+        letters = []
+        j = 0
+        for i in range(self.rows * self.cols):
+            x, y, w, h = cv2.boundingRect(contours[i])
+            cx, cy = x + w // 2, y + h // 2
 
-                roi = image[cy - space : cy + space, cx - space : cx + space]
-                letters[-1 - i // self.cols].append([roi, cx])
-                i += 1
+            roi = image[cy - space_h : cy + space_h, cx - space_w : cx + space_w]
+            letters.append([roi, cx, cy])
+            j += 1
 
-        for images in letters:
-            images.sort(key=lambda x: x[1])
+        letters.sort(key=lambda x: x[2])
+        sorted_letters = []
+        for k in range(self.rows):
+            sorted_letters.extend(
+                sorted(letters[self.cols * k : self.cols * (k + 1)], key=lambda x: x[1])
+            )
 
-        return letters
+        return sorted_letters
 
     def createLetterDirectory(self, letters, letters_dir):
         if not os.path.exists(letters_dir):
             os.mkdir(letters_dir)
 
-        k = 0
-        for images in letters:
-            for i in range(self.cols):
-                if ord(self.LETTER_NAMES[k]) in range(65, 91):
-                    letter = os.path.join(letters_dir, 2 * self.LETTER_NAMES[k + 26])
-                else:
-                    letter = os.path.join(letters_dir, self.LETTER_NAMES[k])
-                if not os.path.exists(letter):
-                    os.mkdir(letter)
-                cv2.imwrite(
-                    os.path.join(letter, self.LETTER_NAMES[k] + ".png"), images[i][0]
-                )
-                k += 1
-                if k == 62:
-                    break
+        for k, images in enumerate(letters):
+            letter = os.path.join(letters_dir, str(ord(self.LETTER_NAMES[k])))
+            if not os.path.exists(letter):
+                os.mkdir(letter)
+            cv2.imwrite(
+                os.path.join(letter, str(ord(self.LETTER_NAMES[k])) + ".png"),
+                images[0],
+            )
 
 
-# if __name__ == "__main__":
-#     directory = os.path.dirname(os.getcwd())
-#     a = SheetToPNG(
-#         sheet=os.path.join(directory, "sheets", "didi.jpg"),
-#         letters_dir=os.path.join(directory, "letters"),
-#         cols=7,
-#         rows=9,
-#     )
+def main():
+    if len(sys.argv) > 1:
+        a = SheetToPNG(sheet=sys.argv[1], letters_dir=sys.argv[2], cols=8, rows=10,)
+    else:
+        print("Usage: sheettopng [SHEET_PATH] [LETTER_DIRECTORY_PATH]")

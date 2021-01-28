@@ -1,5 +1,6 @@
 from PIL import Image, ImageChops
 import os
+import sys
 import subprocess
 
 
@@ -45,5 +46,8 @@ class PngToSvg:
         cropped_im.save(im_path)
 
 
-if __name__ == "__main__":
-    a = PicturesToFont(directory=os.path.dirname(os.getcwd()) + "/letters")
+def main():
+    if len(sys.argv) > 1:
+        a = PngToSvg(directory=sys.argv[1])
+    else:
+        print("Usage: pngtosvg [LETTER_DIRECTORY_PATH]")

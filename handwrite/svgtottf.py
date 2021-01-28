@@ -38,14 +38,14 @@ def setProperties(font, config):
 
 def addGlyphs(font, config, directory):
     space = font.createMappedChar(ord(" "))
-    space.width = 1000
+    space.width = 500
 
-    for k, v in config["glyphs"].items():
-        g = font.createMappedChar(ord(k))
+    for k in config["glyphs"]:
+        g = font.createMappedChar(k)
         # Get outlines
-        src = "%s.svg" % k
-        if not isinstance(v, dict):
-            v = {"src": v or src}
+        src = f"{k}/{k}.svg"
+        # if not isinstance(v, dict):
+        v = {"src": src}
         # src = "%s%s%s" % (config.get("input", "."), os.path.sep, v.pop("src", src))
         src = "%s%s" % (directory, v.pop("src", src))
         g.importOutlines(src, IMPORT_OPTIONS)
@@ -105,7 +105,7 @@ def main(config_file, directory, outfile):
     # for outfile in config["output"]:
     #     sys.stderr.write("Generating %s...\n" % outfile)
     #     font.generate(outfile)
-    sys.stderr.write("Generating %s...\n" % outfile)
+    sys.stderr.write("\nGenerating %s...\n" % outfile)
     font.generate(outfile)
 
 
