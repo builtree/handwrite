@@ -38,20 +38,17 @@ class SheetToPNG:
     def __init__(self):
         pass
 
-    def convert(self, sheet, characters_dir, cols=8, rows=10):
-
+    def convert(self, sheet, characters_dir, cols=8, rows=10, threshold_value=200):
         # TODO If directory given instead of image file, read all images and wrtie the images
         # (example) 0.png, 1.png, 2.png inside every character folder in characters/
-
         # sheet_images = []
         # for s in os.listdir(sheet_dir):
         #     sheet_images.append(cv2.imread(sheet_dir + "/" + s))
 
-        characters = self.detectCharacters(sheet, cols=cols, rows=rows)
+        characters = self.detectCharacters(sheet, threshold_value, cols=cols, rows=rows)
         self.createCharacterDirectory(characters, characters_dir)
 
-    def detectCharacters(self, sheet_image, cols=8, rows=10):
-
+    def detectCharacters(self, sheet_image, threshold_value, cols=8, rows=10):
         # TODO Raise errors and suggest where the problem might be
 
         # Read the image and convert to grayscale
@@ -59,7 +56,7 @@ class SheetToPNG:
         gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
 
         # Threshold and filter the image for better contour detection
-        ret, thresh = cv2.threshold(gray, 200, 255, 1)
+        ret, thresh = cv2.threshold(gray, threshold_value, 255, 1)
         close_kernel = cv2.getStructuringElement(cv2.MORPH_RECT, (3, 3))
         close = cv2.morphologyEx(thresh, cv2.MORPH_CLOSE, close_kernel, iterations=2)
 
@@ -126,8 +123,14 @@ class SheetToPNG:
 
 def main():
     if len(sys.argv) > 1:
+        if len(args) == 3:
+            args.append(200)
         a = SheetToPNG().convert(
-            sheet=sys.argv[1], characters_dir=sys.argv[2], cols=8, rows=10,
+            sheet=sys.argv[1],
+            charaters_dir=sys.argv[2],
+            cols=8,
+            rows=10,
+            threshold_value=int(args[3]),
         )
     else:
-        print("Usage: sheettopng [SHEET_PATH] [CHARACTER_DIRECTORY_PATH]")
+        print("Usage: sheettopng [SHEET_PATH] [CHARACTER_DIRECTORY_PATH] [THRESHOLD_VALUE (Default: 200)]")
