@@ -33,7 +33,7 @@ class SheetToPNG:
         item for start, end in RANGES for item in ASCII[start:end]
     ] + SPECIAL_CHARACTERS
 
-    def __init__(self, sheet, charaters_dir, cols=8, rows=10):
+    def __init__(self, sheet, charaters_dir, cols=8, rows=10, threshold_value=200):
         self.cols = cols
         self.rows = rows
 
@@ -44,17 +44,17 @@ class SheetToPNG:
         # for s in os.listdir(sheet_dir):
         #     sheet_images.append(cv2.imread(sheet_dir + "/" + s))
 
-        charaters = self.detectCharacters(sheet)
+        charaters = self.detectCharacters(sheet, threshold_value)
         self.createCharacterDirectory(charaters, charaters_dir)
 
-    def detectCharacters(self, sheet_image):
+    def detectCharacters(self, sheet_image, threshold_value):
 
         # Read the image and convert to grayscale
         image = cv2.imread(sheet_image)
         gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
 
         # Threshold and filter the image for better contour detection
-        ret, thresh = cv2.threshold(gray, 200, 255, 1)
+        ret, thresh = cv2.threshold(gray, threshold_value, 255, 1)
         close_kernel = cv2.getStructuringElement(cv2.MORPH_RECT, (3, 3))
         close = cv2.morphologyEx(thresh, cv2.MORPH_CLOSE, close_kernel, iterations=2)
 
