@@ -1,6 +1,7 @@
 import sys
 import os.path
 import json
+import subprocess
 
 IMPORT_OPTIONS = ("removeoverlap", "correctdir")
 
@@ -10,7 +11,30 @@ except NameError:
     unicode = str
 
 
-def loadConfig(filename="font.json"):
+class SVGtoTTF:
+    def __init__(self):
+        pass
+
+    def convert(self, directory, outfile, config):
+        if directory[-1] not in "\/":
+            directory = directory + "/"
+        subprocess.run(
+            [
+                "fontforge",
+                "--script",
+                os.path.realpath(__file__),
+                config,
+                directory,
+                outfile,
+            ]
+        )
+
+
+def loadConfig(filename="default"):
+    if filename == "default":
+        filename = os.path.join(
+            os.path.dirname(os.path.realpath(__file__)), "default.json"
+        )
     with open(filename) as f:
         return json.load(f)
 
