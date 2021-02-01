@@ -1,11 +1,24 @@
 from PIL import Image, ImageChops
 import os
 import sys
+import shutil
 import subprocess
 
 
+class PotraceNotFound(Exception):
+    pass
+
+
 class PngToSvg:
-    def __init__(self, directory=None, font_name="", config={}):
+    def __init__(self):
+        pass
+
+    def convert(self, directory):
+        """Call converters on each .png in the provider directory.
+
+        Walk through the custom directory containing all .png files
+        from sheettopng and convert them to png -> bmp -> svg.
+        """
         path = os.walk(directory)
         for root, dirs, files in path:
             for f in files:
@@ -15,22 +28,55 @@ class PngToSvg:
                     self.bmpToSvg(root + "/" + f[0:-4] + ".bmp")
 
     def bmpToSvg(self, path):
-        subprocess.run(["potrace", path, "-b", "svg", "-o", path[0:-4] + ".svg"])
+        """Convert .bmp image to .svg using potrace.
+
+        Converts the passed .bmp file to .svg using the potrace
+        (http://potrace.sourceforge.net/). Each .bmp is passed as
+        a parameter to potrace which is called as a subprocess.
+
+        Parameters
+        ----------
+        path : str
+            Path to the bmp file to be converted.
+
+        Raises
+        ------
+        PotraceNotFound
+            Raised if potrace not found in path by shutil.which()
+        """
+        if shutil.which("potrace") is None:
+            raise PotraceNotFound("Potrace is either not installed or not in path")
+        else:
+            subprocess.run(["potrace", path, "-b", "svg", "-o", path[0:-4] + ".svg"])
 
     def pngToBmp(self, path):
-        png = Image.open(path)
-        img = png.convert("RGBA")
-        # Resizing char images to default size
-        img = img.resize((100, 100))
-        data = list(img.getdata())
+        """Convert .bmp image to .svg using potrace.
+
+        Converts the passed .bmp file to .svg using the potrace
+        (http://potrace.sourceforge.net/). Each .bmp is passed as
+        a parameter to potrace which is called as a subprocess.
+
+        Parameters
+        ----------
+        path : str
+            Path to the bmp file to be converted.
+
+        Raises
+        ------
+        PotraceNotFound
+            Raised if potrace not found in path by shutil.which()
+        """
+        img = Image.open(path).convert("RGBA").resize((100, 100))
+
+        # Threshold image to convert each pixel to either black or white
         threshold = 200
-        newdata = []
-        for pix in data:
+        data = []
+        for pix in list(img.getdata()):
             if pix[0] >= threshold and pix[1] >= threshold and pix[3] >= threshold:
-                newdata.append((255, 255, 255, 0))
+                data.append((255, 255, 255, 0))
             else:
-                newdata.append((0, 0, 0, 1))
-        img.putdata(newdata)
+                data.append((0, 0, 0, 1))
+        img.putdata(data)
         img.save(path[0:-4] + ".bmp")
 
     def trim(self, im_path):
@@ -49,5 +95,6 @@ class PngToSvg:
 def main():
     if len(sys.argv) > 1:
         a = PngToSvg(directory=sys.argv[1])
+        a.convert()
     else:
         print("Usage: pngtosvg [LETTER_DIRECTORY_PATH]")

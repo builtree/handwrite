@@ -29,38 +29,44 @@ SPECIAL_CHARACTERS = [
 
 
 class SheetToPNG:
-    LETTER_NAMES = [
+    CHARACTER_NAMES = [
         item for start, end in RANGES for item in ASCII[start:end]
     ] + SPECIAL_CHARACTERS
 
-    def __init__(self, sheet, letters_dir, cols=8, rows=10):
-        self.cols = cols
-        self.rows = rows
+    def __init__(self):
+        pass
+
+    def convert(self, sheet, characters_dir, cols=8, rows=10):
 
         # TODO If directory given instead of image file, read all images and wrtie the images
-        # (example) 0.png, 1.png, 2.png inside every character folder in letters/
+        # (example) 0.png, 1.png, 2.png inside every character folder in characters/
 
         # sheet_images = []
         # for s in os.listdir(sheet_dir):
         #     sheet_images.append(cv2.imread(sheet_dir + "/" + s))
 
-        letters = self.detectLetters(sheet)
-        self.createLetterDirectory(letters, letters_dir)
+        characters = self.detectCharacters(sheet, cols=cols, rows=rows)
+        self.createCharacterDirectory(characters, characters_dir)
 
-    def detectLetters(self, sheet_image):
+    def detectCharacters(self, sheet_image, cols=8, rows=10):
+
+        # TODO Raise errors and suggest where the problem might be
+
+        # Read the image and convert to grayscale
         image = cv2.imread(sheet_image)
         gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
 
-        # kernel = np.array([[-1, -1, -1], [-1, 9, -1], [-1, -1, -1],])
-        # filtered = cv2.filter2D(blurred, -1, kernel)
-
+        # Threshold and filter the image for better contour detection
         ret, thresh = cv2.threshold(gray, 200, 255, 1)
         close_kernel = cv2.getStructuringElement(cv2.MORPH_RECT, (3, 3))
         close = cv2.morphologyEx(thresh, cv2.MORPH_CLOSE, close_kernel, iterations=2)
 
+        # Search for contours.
         contours, h = cv2.findContours(
             close, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE
         )
+
+        # Filter contours based on number of sides and then reverse sort by area.
         contours = sorted(
             filter(
                 lambda cnt: len(
@@ -73,44 +79,57 @@ class SheetToPNG:
             reverse=True,
         )
 
+        # Calculate the bounding of the first contour and approximate the height
+        # and width for final cropping.
         x, y, w, h = cv2.boundingRect(contours[0])
         space_h, space_w = 7 * h // 16, 7 * w // 16
 
-        letters = []
-        j = 0
-        for i in range(self.rows * self.cols):
+        # Since amongst all the contours, the expected case is that the 4 sided contours
+        # containing the characters should have the maximum area, so we loop through the first
+        # rows*colums contours and add them to final list after cropping.
+        characters = []
+        for i in range(rows * cols):
             x, y, w, h = cv2.boundingRect(contours[i])
             cx, cy = x + w // 2, y + h // 2
 
             roi = image[cy - space_h : cy + space_h, cx - space_w : cx + space_w]
-            letters.append([roi, cx, cy])
-            j += 1
+            characters.append([roi, cx, cy])
 
-        letters.sort(key=lambda x: x[2])
-        sorted_letters = []
-        for k in range(self.rows):
-            sorted_letters.extend(
-                sorted(letters[self.cols * k : self.cols * (k + 1)], key=lambda x: x[1])
+        # Now we have the characters but since they are all mixed up we need to position them.
+        # Sort characters based on 'y' coordinate and group them by number of rows at a time. Then
+        # sort each group based on the 'x' coordinate.
+        characters.sort(key=lambda x: x[2])
+        sorted_characters = []
+        for k in range(rows):
+            sorted_characters.extend(
+                sorted(characters[cols * k : cols * (k + 1)], key=lambda x: x[1])
             )
 
-        return sorted_letters
+        return sorted_characters
 
-    def createLetterDirectory(self, letters, letters_dir):
-        if not os.path.exists(letters_dir):
-            os.mkdir(letters_dir)
+    def createCharacterDirectory(self, characters, characters_dir):
+        if not os.path.exists(characters_dir):
+            os.mkdir(characters_dir)
 
-        for k, images in enumerate(letters):
-            letter = os.path.join(letters_dir, str(ord(self.LETTER_NAMES[k])))
-            if not os.path.exists(letter):
-                os.mkdir(letter)
+        # Create directory for each character and save the png for the characters
+        # Structure: UserProvidedDir/ord(character)/ord(character).png
+        for k, images in enumerate(characters):
+            character = os.path.join(characters_dir, str(ord(self.CHARACTER_NAMES[k])))
+            if not os.path.exists(character):
+                os.mkdir(character)
             cv2.imwrite(
-                os.path.join(letter, str(ord(self.LETTER_NAMES[k])) + ".png"),
+                os.path.join(character, str(ord(self.CHARACTER_NAMES[k])) + ".png"),
                 images[0],
             )
 
 
 def main():
     if len(sys.argv) > 1:
-        a = SheetToPNG(sheet=sys.argv[1], letters_dir=sys.argv[2], cols=8, rows=10,)
+        a = SheetToPNG().convert(
+            sheet=sys.argv[1],
+            characters_dir=sys.argv[2],
+            cols=8,
+            rows=10,
+        )
     else:
-        print("Usage: sheettopng [SHEET_PATH] [LETTER_DIRECTORY_PATH]")
+        print("Usage: sheettopng [SHEET_PATH] [CHARACTER_DIRECTORY_PATH]")

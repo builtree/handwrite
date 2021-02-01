@@ -22,10 +22,13 @@ def svgToTtf(directory, outfile):
 def main():
     args = sys.argv
     if len(args) > 1:
-        SheetToPNG(
-            args[1], letters_dir=args[2], cols=8, rows=10,
+        SheetToPNG().convert(
+            args[1],
+            characters_dir=args[2],
+            cols=8,
+            rows=10,
         )
-        PngToSvg(directory=args[2])
+        PngToSvg().convert(directory=args[2])
         svgToTtf(args[2], args[3])
     else:
         print(
