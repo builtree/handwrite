@@ -1,12 +1,11 @@
 import os
 import sys
+import itertools
 
 import cv2
 
-ASCII = list(map(chr, range(127)))
-# Seq: A-Z, a-z, 0-9
-RANGES = [(65, 91), (97, 123), (48, 58)]
-SPECIAL_CHARACTERS = [
+
+SPECIAL_CHARS = [
     ".",
     ",",
     ";",
@@ -27,27 +26,30 @@ SPECIAL_CHARACTERS = [
     "]",
 ]
 
+# Seq: A-Z, a-z, 0-9, SPECIAL_CHARS
+ALL_CHARS = list(
+    itertools.chain(
+        range(65, 91), range(97, 123), range(48, 58), [ord(i) for i in SPECIAL_CHARS]
+    )
+)
+
 
 class SheetToPNG:
-    CHARACTER_NAMES = [
-        item for start, end in RANGES for item in ASCII[start:end]
-    ] + SPECIAL_CHARACTERS
+    def __init__(self):
+        pass
 
-    def __init__(self, sheet, charaters_dir, cols=8, rows=10, threshold_value=200):
-        self.cols = cols
-        self.rows = rows
-
+    def convert(self, sheet, characters_dir, cols=8, rows=10, threshold_value=200):
         # TODO If directory given instead of image file, read all images and wrtie the images
-        # (example) 0.png, 1.png, 2.png inside every character folder in charaters/
-
+        # (example) 0.png, 1.png, 2.png inside every character folder in characters/
         # sheet_images = []
         # for s in os.listdir(sheet_dir):
         #     sheet_images.append(cv2.imread(sheet_dir + "/" + s))
 
-        charaters = self.detectCharacters(sheet, threshold_value)
-        self.createCharacterDirectory(charaters, charaters_dir)
+        characters = self.detectCharacters(sheet, threshold_value, cols=cols, rows=rows)
+        self.createCharacterDirectory(characters, characters_dir)
 
-    def detectCharacters(self, sheet_image, threshold_value):
+    def detectCharacters(self, sheet_image, threshold_value, cols=8, rows=10):
+        # TODO Raise errors and suggest where the problem might be
 
         # Read the image and convert to grayscale
         image = cv2.imread(sheet_image)
@@ -82,53 +84,53 @@ class SheetToPNG:
         space_h, space_w = 7 * h // 16, 7 * w // 16
 
         # Since amongst all the contours, the expected case is that the 4 sided contours
-        # containing the charaters should have the maximum area, so we loop through the first
+        # containing the characters should have the maximum area, so we loop through the first
         # rows*colums contours and add them to final list after cropping.
-        charaters = []
-        for i in range(self.rows * self.cols):
+        characters = []
+        for i in range(rows * cols):
             x, y, w, h = cv2.boundingRect(contours[i])
             cx, cy = x + w // 2, y + h // 2
 
             roi = image[cy - space_h : cy + space_h, cx - space_w : cx + space_w]
-            charaters.append([roi, cx, cy])
+            characters.append([roi, cx, cy])
 
-        # Now we have the charaters but since they are all mixed up we need to position them.
-        # Sort charaters based on 'y' coordinate and group them by number of rows at a time. Then
+        # Now we have the characters but since they are all mixed up we need to position them.
+        # Sort characters based on 'y' coordinate and group them by number of rows at a time. Then
         # sort each group based on the 'x' coordinate.
-        charaters.sort(key=lambda x: x[2])
-        sorted_charaters = []
-        for k in range(self.rows):
-            sorted_charaters.extend(
-                sorted(
-                    charaters[self.cols * k : self.cols * (k + 1)], key=lambda x: x[1]
-                )
+        characters.sort(key=lambda x: x[2])
+        sorted_characters = []
+        for k in range(rows):
+            sorted_characters.extend(
+                sorted(characters[cols * k : cols * (k + 1)], key=lambda x: x[1])
             )
 
-        return sorted_charaters
+        return sorted_characters
 
-    def createCharacterDirectory(self, charaters, charaters_dir):
-        if not os.path.exists(charaters_dir):
-            os.mkdir(charaters_dir)
+    def createCharacterDirectory(self, characters, characters_dir):
+        if not os.path.exists(characters_dir):
+            os.mkdir(characters_dir)
 
-        # Create directory for each charater and save the png for the characters
+        # Create directory for each character and save the png for the characters
         # Structure: UserProvidedDir/ord(character)/ord(character).png
-        for k, images in enumerate(charaters):
-            charater = os.path.join(charaters_dir, str(ord(self.CHARACTER_NAMES[k])))
-            if not os.path.exists(charater):
-                os.mkdir(charater)
+        for k, images in enumerate(characters):
+            character = os.path.join(characters_dir, str(ALL_CHARS[k]))
+            if not os.path.exists(character):
+                os.mkdir(character)
             cv2.imwrite(
-                os.path.join(charater, str(ord(self.CHARACTER_NAMES[k])) + ".png"),
-                images[0],
+                os.path.join(character, str(ALL_CHARS[k]) + ".png"), images[0],
             )
 
 
 def main():
     if len(sys.argv) > 1:
-        a = SheetToPNG(
+        if len(sys.argv) == 3:
+            sys.argv.append(200)
+        a = SheetToPNG().convert(
             sheet=sys.argv[1],
-            charaters_dir=sys.argv[2],
+            characters_dir=sys.argv[2],
             cols=8,
             rows=10,
+            threshold_value=int(sys.argv[3]),
         )
     else:
-        print("Usage: sheettopng [SHEET_PATH] [CHARACTER_DIRECTORY_PATH]")
+        print("Usage: sheettopng [SHEET_PATH] [CHARACTER_DIRECTORY_PATH] [THRESHOLD_VALUE (Default: 200)]")

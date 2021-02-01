@@ -24,10 +24,14 @@ def main():
     if len(args) > 1:
         if len(args) == 4:
             args.append(200)
-        SheetToPNG(
-            args[1], letters_dir=args[2], cols=8, rows=10, threshold_value=int(args[4])
+        SheetToPNG().convert(
+            args[1],
+            characters_dir=args[2],
+            cols=8,
+            rows=10,
+            threshold_value=int(args[4]),
         )
-        PngToSvg(directory=args[2])
+        PngToSvg().convert(directory=args[2])
         svgToTtf(args[2], args[3])
     else:
         print(
