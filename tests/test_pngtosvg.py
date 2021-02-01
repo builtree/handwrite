@@ -1,16 +1,14 @@
-import unittest
-import tempfile
-import shutil
 import os
-import platform
-import subprocess
+import unittest
+
 from handwrite.pngtosvg import PngToSvg
 
 
 class TestPngToSvg(unittest.TestCase):
     def setUp(self):
         self.directory = os.path.join(
-            os.path.dirname(os.path.abspath(__file__)), "test_data\pngtosvg"
+            os.path.dirname(os.path.abspath(__file__)),
+            "test_data" + os.sep + "pngtosvg",
         )
         self.converter = PngToSvg()
 

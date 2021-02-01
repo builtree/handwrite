@@ -1,12 +1,11 @@
 import os
 import sys
+import itertools
 
 import cv2
 
-ASCII = list(map(chr, range(127)))
-# Seq: A-Z, a-z, 0-9
-RANGES = [(65, 91), (97, 123), (48, 58)]
-SPECIAL_CHARACTERS = [
+
+SPECIAL_CHARS = [
     ".",
     ",",
     ";",
@@ -27,12 +26,15 @@ SPECIAL_CHARACTERS = [
     "]",
 ]
 
+# Seq: A-Z, a-z, 0-9, SPECIAL_CHARS
+ALL_CHARS = list(
+    itertools.chain(
+        range(65, 91), range(97, 123), range(48, 58), [ord(i) for i in SPECIAL_CHARS]
+    )
+)
+
 
 class SheetToPNG:
-    CHARACTER_NAMES = [
-        item for start, end in RANGES for item in ASCII[start:end]
-    ] + SPECIAL_CHARACTERS
-
     def __init__(self):
         pass
 
@@ -114,22 +116,18 @@ class SheetToPNG:
         # Create directory for each character and save the png for the characters
         # Structure: UserProvidedDir/ord(character)/ord(character).png
         for k, images in enumerate(characters):
-            character = os.path.join(characters_dir, str(ord(self.CHARACTER_NAMES[k])))
+            character = os.path.join(characters_dir, str(ALL_CHARS[k]))
             if not os.path.exists(character):
                 os.mkdir(character)
             cv2.imwrite(
-                os.path.join(character, str(ord(self.CHARACTER_NAMES[k])) + ".png"),
-                images[0],
+                os.path.join(character, str(ALL_CHARS[k]) + ".png"), images[0],
             )
 
 
 def main():
     if len(sys.argv) > 1:
         a = SheetToPNG().convert(
-            sheet=sys.argv[1],
-            characters_dir=sys.argv[2],
-            cols=8,
-            rows=10,
+            sheet=sys.argv[1], characters_dir=sys.argv[2], cols=8, rows=10,
         )
     else:
         print("Usage: sheettopng [SHEET_PATH] [CHARACTER_DIRECTORY_PATH]")

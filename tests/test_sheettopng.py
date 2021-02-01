@@ -1,38 +1,9 @@
-import unittest
-import tempfile
-import shutil
-import itertools
 import os
-import platform
-import subprocess
-from handwrite.sheettopng import SheetToPNG
+import shutil
+import tempfile
+import unittest
 
-SPECIAL_CHARS = [
-    ".",
-    ",",
-    ";",
-    ":",
-    "!",
-    "?",
-    '"',
-    "'",
-    "-",
-    "+",
-    "=",
-    "/",
-    "%",
-    "&",
-    "(",
-    ")",
-    "[",
-    "]",
-]
-
-ALL_CHARS = list(
-    itertools.chain(
-        range(65, 91), range(97, 123), range(48, 58), [ord(i) for i in SPECIAL_CHARS]
-    )
-)
+from handwrite.sheettopng import SheetToPNG, ALL_CHARS
 
 
 class TestSheetToPNG(unittest.TestCase):
