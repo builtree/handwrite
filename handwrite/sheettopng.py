@@ -117,7 +117,8 @@ class SheetToPNG:
             if not os.path.exists(character):
                 os.mkdir(character)
             cv2.imwrite(
-                os.path.join(character, str(ALL_CHARS[k]) + ".png"), images[0],
+                os.path.join(character, str(ALL_CHARS[k]) + ".png"),
+                images[0],
             )
 
 
@@ -133,4 +134,6 @@ def main():
             threshold_value=int(sys.argv[3]),
         )
     else:
-        print("Usage: sheettopng [SHEET_PATH] [CHARACTER_DIRECTORY_PATH] [THRESHOLD_VALUE (Default: 200)]")
+        print(
+            "Usage: sheettopng [SHEET_PATH] [CHARACTER_DIRECTORY_PATH] [THRESHOLD_VALUE (Default: 200)]"
+        )

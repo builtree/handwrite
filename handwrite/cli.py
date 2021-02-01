@@ -1,39 +1,33 @@
 import sys
+import shutil
+import argparse
+import tempfile
 import subprocess
+
 from handwrite.sheettopng import SheetToPNG
 from handwrite.pngtosvg import PngToSvg
-
-# Temporary Function to call svgtottf with fontforge
-def svgToTtf(directory, outfile):
-    if directory[-1] not in "\/":
-        directory = directory + "/"
-    subprocess.run(
-        [
-            "fontforge",
-            "--script",
-            "handwrite/svgtottf.py",
-            "handwrite/temp_config.json",
-            directory,
-            outfile,
-        ]
-    )
+from handwrite.svgtottf import SVGtoTTF
 
 
 def main():
-    args = sys.argv
-    if len(args) > 1:
-        if len(args) == 4:
-            args.append(200)
-        SheetToPNG().convert(
-            args[1],
-            characters_dir=args[2],
-            cols=8,
-            rows=10,
-            threshold_value=int(args[4]),
-        )
-        PngToSvg().convert(directory=args[2])
-        svgToTtf(args[2], args[3])
-    else:
-        print(
-            "Usage: handwrite [PATH TO INITIAL SHEET] [DIRECTORY FOR SAVING TEMP IMAGES] [OUTPUT FONT NAME.ttf] [THRESHOLD_VALUE (Default: 200)]"
-        )
+    parser = argparse.ArgumentParser()
+    parser.add_argument("sheet", help="Path to sample sheet")
+    parser.add_argument("output", help="Name of the font output")
+    parser.add_argument(
+        "--directory",
+        help="Generate additional files to this path (Temp by default)",
+        default=None,
+    )
+    parser.add_argument("--config", help="Use custom configuration", default="default")
+    args = parser.parse_args()
+
+    directory = args.directory
+    if not directory:
+        directory = tempfile.mkdtemp()
+
+    SheetToPNG().convert(args.sheet, directory)
+    PngToSvg().convert(directory=directory)
+    SVGtoTTF().convert(directory, args.output + ".ttf", args.config)
+
+    if not args.directory:
+        shutil.rmtree(directory)
