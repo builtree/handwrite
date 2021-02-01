@@ -1,0 +1,33 @@
+name: Tests
+
+on: [push, pull_request]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: [3.7, 3.8]
+
+    steps:
+      - name: Checkout full upstream repo
+        uses: actions/checkout@v2
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v2
+        with:
+          python-version: ${{ matrix.python-version }}
+      - name: Install fontforge
+        run: |
+          sudo apt-get install -y software-properties-common
+          sudo add-apt-repository -y ppa:fontforge/fontforge
+          sudo apt-get -y update
+          sudo apt-get install -y fontforge
+      - name: Install Potrace
+        run: |
+          sudo apt install -y potrace
+      - name: Install Handwrite
+        run: |
+          pip install -e .
+      - name: Test
+        run: |
+          python setup.py test
