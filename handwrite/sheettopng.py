@@ -123,14 +123,14 @@ class SheetToPNG:
 
 def main():
     if len(sys.argv) > 1:
-        if len(args) == 3:
-            args.append(200)
+        if len(sys.argv) == 3:
+            sys.argv.append(200)
         a = SheetToPNG().convert(
             sheet=sys.argv[1],
-            charaters_dir=sys.argv[2],
+            characters_dir=sys.argv[2],
             cols=8,
             rows=10,
-            threshold_value=int(args[3]),
+            threshold_value=int(sys.argv[3]),
         )
     else:
         print("Usage: sheettopng [SHEET_PATH] [CHARACTER_DIRECTORY_PATH] [THRESHOLD_VALUE (Default: 200)]")
