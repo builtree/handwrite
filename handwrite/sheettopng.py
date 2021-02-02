@@ -16,20 +16,63 @@ ALL_CHARS = list(
 
 
 class SheetToPNG:
-    def __init__(self):
-        pass
+    """Converter class to convert input sample sheet to character PNGs."""
 
     def convert(self, sheet, characters_dir, cols=8, rows=10, threshold_value=200):
+        """Convert a sheet of sample writing input to a custom directory structure of PNGs.
+
+        Detect all characters in the sheet as a separate contours and convert each to
+        a PNG image in a temp/user provided directory.
+
+        Parameters
+        ----------
+        sheet : str
+            Path to the sheet file to be converted.
+        characters_dir : str
+            Path to directory to save characters in.
+        threshold_value : int, default=200
+            Value to adjust thresholding of the image for better contour detection.
+        cols : int, default=8
+            Number of columns of expected contours. Defaults to 8 based on the default sample.
+        rows : int, default=10
+            Number of rows of expected contours. Defaults to 10 based on the default sample.
+        """
         # TODO If directory given instead of image file, read all images and wrtie the images
         # (example) 0.png, 1.png, 2.png inside every character folder in characters/
         # sheet_images = []
         # for s in os.listdir(sheet_dir):
         #     sheet_images.append(cv2.imread(sheet_dir + "/" + s))
 
-        characters = self.detectCharacters(sheet, threshold_value, cols=cols, rows=rows)
-        self.createCharacterDirectory(characters, characters_dir)
+        characters = self.detect_characters(
+            sheet, threshold_value, cols=cols, rows=rows
+        )
+        self.save_images(characters, characters_dir)
 
-    def detectCharacters(self, sheet_image, threshold_value, cols=8, rows=10):
+    def detect_characters(self, sheet_image, threshold_value, cols=8, rows=10):
+        """Detect contours on the input image and filter them to get only characters.
+
+        Uses opencv to threshold the image for better contour detection. After finding all
+        contours, they are filtered based on area, cropped and then sorted sequentially based
+        on coordinates. Finally returs the cols*rows top candidates for being the character
+        containing contours.
+
+        Parameters
+        ----------
+        sheet : str
+            Path to the sheet file to be converted.
+        threshold_value : int
+            Value to adjust thresholding of the image for better contour detection.
+        cols : int, default=8
+            Number of columns of expected contours. Defaults to 8 based on the default sample.
+        rows : int, default=10
+            Number of rows of expected contours. Defaults to 10 based on the default sample.
+
+        Returns
+        -------
+        sorted_characters : list of list
+            Final rows*cols contours in form of list of list arranged as:
+            sorted_characters[x][y] denotes contour at x, y position in the input grid.
+        """
         # TODO Raise errors and suggest where the problem might be
 
         # Read the image and convert to grayscale
@@ -37,7 +80,7 @@ class SheetToPNG:
         gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
 
         # Threshold and filter the image for better contour detection
-        ret, thresh = cv2.threshold(gray, threshold_value, 255, 1)
+        _, thresh = cv2.threshold(gray, threshold_value, 255, 1)
         close_kernel = cv2.getStructuringElement(cv2.MORPH_RECT, (3, 3))
         close = cv2.morphologyEx(thresh, cv2.MORPH_CLOSE, close_kernel, iterations=2)
 
@@ -87,7 +130,20 @@ class SheetToPNG:
 
         return sorted_characters
 
-    def createCharacterDirectory(self, characters, characters_dir):
+    def save_images(self, characters, characters_dir):
+        """Create directory for each character and save as PNG.
+
+        Creates directory and PNG file for each image as following:
+
+            characters_dir/ord(character)/ord(character).png
+
+        Parameters
+        ----------
+        characters : list of list
+            Sorted list of character images each inner list representing a row of images.
+        characters_dir : str
+            Path to directory to save characters in.
+        """
         if not os.path.exists(characters_dir):
             os.mkdir(characters_dir)
 
@@ -98,22 +154,6 @@ class SheetToPNG:
             if not os.path.exists(character):
                 os.mkdir(character)
             cv2.imwrite(
-                os.path.join(character, str(ALL_CHARS[k]) + ".png"), images[0],
+                os.path.join(character, str(ALL_CHARS[k]) + ".png"),
+                images[0],
             )
-
-
-def main():
-    if len(sys.argv) > 1:
-        if len(sys.argv) == 3:
-            sys.argv.append(200)
-        a = SheetToPNG().convert(
-            sheet=sys.argv[1],
-            characters_dir=sys.argv[2],
-            cols=8,
-            rows=10,
-            threshold_value=int(sys.argv[3]),
-        )
-    else:
-        print(
-            "Usage: sheettopng [SHEET_PATH] [CHARACTER_DIRECTORY_PATH] [THRESHOLD_VALUE (Default: 200)]"
-        )

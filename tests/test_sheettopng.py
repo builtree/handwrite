@@ -28,12 +28,12 @@ class TestSheetToPNG(unittest.TestCase):
                 )
             )
 
-    # TODO Once all the errors are done for detectCharacters
+    # TODO Once all the errors are done for detect_characters
     # Write tests to check each kind of scan and whether it raises
     # helpful errors, Boilerplate below:
-    # def test_detectCharacters(self):
+    # def test_detect_characters(self):
     #     scans = ["excellent", "good", "average"]
     #     for scan in scans:
-    #         detected_chars = self.converter.detectCharacters(
+    #         detected_chars = self.converter.detect_characters(
     #             os.path.join(self.sheets_path, f"{scan}.jpg")
     #         )
