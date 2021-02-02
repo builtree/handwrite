@@ -18,10 +18,9 @@ jobs:
           python-version: ${{ matrix.python-version }}
       - name: Install fontforge
         run: |
-          sudo apt-get install -y software-properties-common
-          sudo add-apt-repository -y ppa:fontforge/fontforge
-          sudo apt-get -y update
-          sudo apt-get install -y fontforge
+          sudo apt install software-properties-common
+          sudo apt -y update
+          sudo apt install -y fontforge
       - name: Install Potrace
         run: |
           sudo apt install -y potrace
