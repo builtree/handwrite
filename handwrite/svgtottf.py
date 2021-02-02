@@ -67,7 +67,7 @@ def addGlyphs(font, config, directory):
     for k in config["glyphs"]:
         g = font.createMappedChar(k)
         # Get outlines
-        src = f"{k}/{k}.svg"
+        src = "{}/{}.svg".format(k, k)
         # if not isinstance(v, dict):
         v = {"src": src}
         # src = "%s%s%s" % (config.get("input", "."), os.path.sep, v.pop("src", src))
@@ -91,8 +91,8 @@ def setBearings(font, bearings):
         if v[1] == None:
             v[1] = default[1]
 
-        font[k].left_side_bearing = v[0]
-        font[k].right_side_bearing = v[1]
+        font[str(k)].left_side_bearing = v[0]
+        font[str(k)].right_side_bearing = v[1]
 
 
 def setKerning(font, table):
