@@ -4,9 +4,9 @@ import argparse
 import tempfile
 import subprocess
 
-from handwrite.sheettopng import SheetToPNG
-from handwrite.pngtosvg import PngToSvg
-from handwrite.svgtottf import SVGtoTTF
+from handwrite import SheetToPNG
+from handwrite import PngToSvg
+from handwrite import SVGtoTTF
 
 
 def main():
