@@ -4,32 +4,13 @@ import itertools
 
 import cv2
 
-
-SPECIAL_CHARS = [
-    ".",
-    ",",
-    ";",
-    ":",
-    "!",
-    "?",
-    '"',
-    "'",
-    "-",
-    "+",
-    "=",
-    "/",
-    "%",
-    "&",
-    "(",
-    ")",
-    "[",
-    "]",
-]
-
 # Seq: A-Z, a-z, 0-9, SPECIAL_CHARS
 ALL_CHARS = list(
     itertools.chain(
-        range(65, 91), range(97, 123), range(48, 58), [ord(i) for i in SPECIAL_CHARS]
+        range(65, 91),
+        range(97, 123),
+        range(48, 58),
+        [ord(i) for i in ".,;:!?\"'-+=/%&()[]"],
     )
 )
 
@@ -117,8 +98,7 @@ class SheetToPNG:
             if not os.path.exists(character):
                 os.mkdir(character)
             cv2.imwrite(
-                os.path.join(character, str(ALL_CHARS[k]) + ".png"),
-                images[0],
+                os.path.join(character, str(ALL_CHARS[k]) + ".png"), images[0],
             )
 
 
