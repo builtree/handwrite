@@ -109,7 +109,7 @@ def setKerning(font, table):
     # print(font.getKerningClass("kern-1"))
 
 
-def main(config_file, directory, outfile):
+def main(config_file, directory, outdir):
     config = loadConfig(config_file)
     font = fontforge.font()
     unicode_mapping = {}
@@ -127,7 +127,9 @@ def main(config_file, directory, outfile):
 
     # Generate font and save as a .ttf file
     outfile = (
-        os.path.abspath(outfile) + os.sep + config["props"].get("filename", "Example")
+        os.path.abspath(outdir)
+        + os.sep
+        + str(config["props"].get("filename", "Example"))
     )
     outfile = outfile + ".ttf" if not outfile.endswith(".ttf") else outfile
     sys.stderr.write("\nGenerating %s...\n" % outfile)
