@@ -20,7 +20,7 @@ class PngToSvg:
         path = os.walk(directory)
         for root, dirs, files in path:
             for f in files:
-                if f[-4:] == ".png":
+                if f.endswith(".png"):
                     self.pngToBmp(root + "/" + f)
                     # self.trim(root + "/" + f[0:-4] + ".bmp")
                     self.bmpToSvg(root + "/" + f[0:-4] + ".bmp")

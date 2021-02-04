@@ -9,8 +9,8 @@ from handwrite.sheettopng import ALL_CHARS
 
 class TestCLI(unittest.TestCase):
     def setUp(self):
-        self.temp_dir = tempfile.mkdtemp()
         self.file_dir = os.path.dirname(os.path.abspath(__file__))
+        self.temp_dir = tempfile.mkdtemp()
 
     def tearDown(self):
         shutil.rmtree(self.temp_dir)
@@ -21,17 +21,17 @@ class TestCLI(unittest.TestCase):
             [
                 "handwrite",
                 os.path.join(self.file_dir, "test_data", "sheettopng", "excellent.jpg"),
-                os.path.join(self.temp_dir, "test"),
+                self.temp_dir,
             ]
         )
-        self.assertTrue(os.path.exists(os.path.join(self.temp_dir, "test.ttf")))
+        self.assertTrue(os.path.exists(os.path.join(self.temp_dir, "MyFont.ttf")))
 
         # Check working with optional parameters
         subprocess.call(
             [
                 "handwrite",
                 os.path.join(self.file_dir, "test_data", "sheettopng", "excellent.jpg"),
-                os.path.join(self.temp_dir, "test2"),
+                self.temp_dir,
                 "--directory",
                 self.temp_dir,
                 "--config",
@@ -45,4 +45,4 @@ class TestCLI(unittest.TestCase):
                         os.path.join(self.temp_dir, f"{i}" + os.sep + f"{i}{suffix}")
                     )
                 )
-        self.assertTrue(os.path.exists(os.path.join(self.temp_dir, "test2.ttf")))
+        self.assertTrue(os.path.exists(os.path.join(self.temp_dir, "MyFont.ttf")))

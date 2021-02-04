@@ -1,8 +1,6 @@
-import sys
 import shutil
 import argparse
 import tempfile
-import subprocess
 
 from handwrite import SheetToPNG
 from handwrite import PngToSvg
@@ -12,7 +10,7 @@ from handwrite import SVGtoTTF
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("sheet", help="Path to sample sheet")
-    parser.add_argument("output", help="Name of the font output")
+    parser.add_argument("output", help="Directory Path to save font output")
     parser.add_argument(
         "--directory",
         help="Generate additional files to this path (Temp by default)",
@@ -27,7 +25,7 @@ def main():
 
     SheetToPNG().convert(args.sheet, directory)
     PngToSvg().convert(directory=directory)
-    SVGtoTTF().convert(directory, args.output + ".ttf", args.config)
+    SVGtoTTF().convert(directory, args.output, args.config)
 
     if not args.directory:
         shutil.rmtree(directory)

@@ -5,11 +5,6 @@ import subprocess
 
 IMPORT_OPTIONS = ("removeoverlap", "correctdir")
 
-try:
-    unicode
-except NameError:
-    unicode = str
-
 
 class SVGtoTTF:
     def __init__(self):
@@ -42,30 +37,30 @@ def loadConfig(filename="default"):
 def setProperties(font, config):
     props = config["props"]
     lang = props.pop("lang", "English (US)")
-    family = props.pop("family", None)
+    family = props.get("filename", "Example")
     style = props.pop("style", "Regular")
-    props["encoding"] = props.get("encoding", "UnicodeFull")
-    if family is not None:
-        font.familyname = family
-        font.fontname = family + "-" + style
-        font.fullname = family + " " + style
-    for k, v in config["props"].items():
+    font.familyname = family
+    font.fontname = family + "-" + style
+    font.fullname = family + " " + style
+    font.encoding = props.pop("encoding", "UnicodeFull")
+
+    for k, v in props.items():
         if hasattr(font, k):
             if isinstance(v, list):
                 v = tuple(v)
             setattr(font, k, v)
-        else:
-            font.appendSFNTName(lang, k, v)
+
     for t in config.get("sfnt_names", []):
-        font.appendSFNTName(str(t[0]), str(t[1]), unicode(t[2]))
+        font.appendSFNTName(str(lang), str(t[0]), str(t[1]))
 
 
-def addGlyphs(font, config, directory):
+def addGlyphs(font, config, unicode_mapping, directory):
     space = font.createMappedChar(ord(" "))
     space.width = 500
 
     for k in config["glyphs"]:
         g = font.createMappedChar(k)
+        unicode_mapping.setdefault(k, g.glyphname)
         # Get outlines
         src = "{}/{}.svg".format(k, k)
         # if not isinstance(v, dict):
@@ -82,7 +77,7 @@ def addGlyphs(font, config, directory):
                 setattr(g, k2, v2)
 
 
-def setBearings(font, bearings):
+def setBearings(font, bearings, unicode_mapping):
     default = bearings.pop("Default")
 
     for k, v in bearings.items():
@@ -91,8 +86,9 @@ def setBearings(font, bearings):
         if v[1] == None:
             v[1] = default[1]
 
-        font[str(k)].left_side_bearing = v[0]
-        font[str(k)].right_side_bearing = v[1]
+        glyph_name = unicode_mapping[ord(str(k))]
+        font[glyph_name].left_side_bearing = v[0]
+        font[glyph_name].right_side_bearing = v[1]
 
 
 def setKerning(font, table):
@@ -101,11 +97,11 @@ def setKerning(font, table):
     cols = table["cols"]
     cols = [list(i) if i != None else None for i in cols]
 
-    kerning_table = table["table"]
-    flatten_list = (
-        lambda y: [x for a in y for x in flatten_list(a)] if type(y) is list else [y]
-    )
-    kerning_list = [0 if x == None else x for x in flatten_list(kerning_table)]
+    # kerning_table = table["table"]
+    # flatten_list = (
+    #     lambda y: [x for a in y for x in flatten_list(a)] if type(y) is list else [y]
+    # )
+    # kerning_list = [0 if x == None else x for x in flatten_list(kerning_table)]
 
     font.addLookup("kern", "gpos_pair", 0, [["kern", [["latn", ["dflt"]]]]])
     font.addKerningClass("kern", "kern-1", 0, rows, cols, True)
@@ -113,22 +109,25 @@ def setKerning(font, table):
     # print(font.getKerningClass("kern-1"))
 
 
-def main(config_file, directory, outfile):
+def main(config_file, directory, outdir):
     config = loadConfig(config_file)
-    # os.chdir(os.path.dirname(config_file) or ".")
     font = fontforge.font()
+    unicode_mapping = {}
+
     setProperties(font, config)
-    addGlyphs(font, config, directory)
+    addGlyphs(font, config, unicode_mapping, directory)
 
     # bearing table
-    setBearings(font, config.get("bearing_table", {}))
+    setBearings(
+        font, config["typography_parameters"].get("bearing_table", {}), unicode_mapping
+    )
 
     # kerning table
-    setKerning(font, config.get("kerning_table", {}))
+    setKerning(font, config["typography_parameters"].get("kerning_table", {}))
 
-    # for outfile in config["output"]:
-    #     sys.stderr.write("Generating %s...\n" % outfile)
-    #     font.generate(outfile)
+    # Generate font and save as a .ttf file
+    outfile = outdir + os.sep + str(config["props"].get("filename", "Example"))
+    outfile = outfile + ".ttf" if not outfile.endswith(".ttf") else outfile
     sys.stderr.write("\nGenerating %s...\n" % outfile)
     font.generate(outfile)
 
