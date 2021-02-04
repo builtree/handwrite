@@ -51,7 +51,7 @@ def setProperties(font, config):
             setattr(font, k, v)
 
     for t in config.get("sfnt_names", []):
-        font.appendSFNTName(lang, str(t[0]), t[1])
+        font.appendSFNTName(str(lang), str(t[0]), str(t[1]))
 
 
 def addGlyphs(font, config, unicode_mapping, directory):
