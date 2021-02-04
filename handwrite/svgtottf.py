@@ -126,11 +126,7 @@ def main(config_file, directory, outdir):
     setKerning(font, config["typography_parameters"].get("kerning_table", {}))
 
     # Generate font and save as a .ttf file
-    outfile = (
-        os.path.abspath(outdir)
-        + os.sep
-        + str(config["props"].get("filename", "Example"))
-    )
+    outfile = outdir + os.sep + str(config["props"].get("filename", "Example"))
     outfile = outfile + ".ttf" if not outfile.endswith(".ttf") else outfile
     sys.stderr.write("\nGenerating %s...\n" % outfile)
     font.generate(outfile)
