@@ -9,8 +9,7 @@ class PotraceNotFound(Exception):
 
 
 class PngToSvg:
-    def __init__(self):
-        pass
+    """Converter class to convert character PNGs to BMPs and SVGs."""
 
     def convert(self, directory):
         """Call converters on each .png in the provider directory.
