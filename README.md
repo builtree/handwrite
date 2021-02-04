@@ -52,7 +52,7 @@ You are ready to go!
 
 ## Creating your Handwritten Sample 
 
-1. Take a printout of `handwrite_sample.pdf`, present in the cloned `handwrite` folder.
+1. Take a printout of the [sample form](https://github.com/cod-ed/handwrite/raw/main/handwrite_sample.pdf).
 2. Fill the form. (Take a look at `handwrite/temp_sheets/sheet_new.jpg` as an example)
 3. Scan the filled form using a scanner, or Adobe Scan in your phone.
 4. Add the jpg image to the `temp_sheets` folder.
