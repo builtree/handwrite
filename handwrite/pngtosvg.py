@@ -1,6 +1,5 @@
 from PIL import Image, ImageChops
 import os
-import sys
 import shutil
 import subprocess
 
@@ -10,8 +9,7 @@ class PotraceNotFound(Exception):
 
 
 class PngToSvg:
-    def __init__(self):
-        pass
+    """Converter class to convert character PNGs to BMPs and SVGs."""
 
     def convert(self, directory):
         """Call converters on each .png in the provider directory.
@@ -90,11 +88,3 @@ class PngToSvg:
         bbox[3] += 1
         cropped_im = im.crop(bbox)
         cropped_im.save(im_path)
-
-
-def main():
-    if len(sys.argv) > 1:
-        a = PngToSvg(directory=sys.argv[1])
-        a.convert()
-    else:
-        print("Usage: pngtosvg [LETTER_DIRECTORY_PATH]")
