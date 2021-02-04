@@ -74,3 +74,7 @@ Your form should look like this:
 3. Your font will be created as `OUTPUT_FONT_NAME.ttf`. Install the font in your system.
 
 4. Select your font in your word processor and get to work!
+
+Here's the end result!
+
+![Handwrite Sentence](https://raw.githubusercontent.com/cod-ed/assets/handwrite/handwrite_sentence.png)
