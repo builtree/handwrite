@@ -20,38 +20,12 @@ Handwrite generates a custom font based on your handwriting sample, which can ea
 Handwrite is also helpful for those with dysgraphia.
 
 # Installing
+
 [Awating Release]
-
-# Development
-
-## Windows
-
-1. Install [Potrace](http://potrace.sourceforge.net/#downloading) and make sure it's in your PATH.
-
-2. Install [fontforge](https://fontforge.org/en-US/downloads/) and make sure scripting is enabled.
-
-3. Clone the repository or your fork
-
-`git clone https://github.com/cod-ed/handwrite`
-
-4. (Optional) Make a virtual environment and activate it
-
-`python -m venv .venv`
-`.venv\Scripts\activate`
-
-5. In the project directory run:
-
-`pip install -e .`
-
-6. Make sure the tests run:
-
-`python setup.py test`
-
-You are ready to go!
 
 # Usage
 
-## Creating your Handwritten Sample 
+## Creating your Handwritten Sample
 
 1. Take a printout of the [sample form](https://github.com/cod-ed/handwrite/raw/main/handwrite_sample.pdf).
 
@@ -68,13 +42,89 @@ Your form should look like this:
 
 1. Make sure you have installed `handwrite`, `potrace` & `fontforge`.
 
-2. In a terminal type `handwrite (PATHTOIMAGE) (OUTPUT_FONT_NAME)`.
+2. In a terminal type `handwrite (PATH_TO_IMAGE) (OUTPUT_DIRECTORY)`.
 (You can also type `handwrite -h`, to see all the arguments you can use).
 
-3. Your font will be created as `OUTPUT_FONT_NAME.ttf`. Install the font in your system.
+3. Your font will be created as `OUTPUT_DIRECTORY/OUTPUT_FONT_NAME.ttf`. Install the font in your system.
 
 4. Select your font in your word processor and get to work!
 
 Here's the end result!
 
 ![Handwrite Sentence](https://raw.githubusercontent.com/cod-ed/assets/handwrite/handwrite_sentence.png)
+
+# Development
+
+## Linux
+
+1. Install Potrace using apt
+
+    ```console
+    $ sudo apt-get install potrace
+    ```
+
+2. Install fontforge using apt
+
+    ```console
+    $ sudo apt-get install potrace
+    ```
+
+3. Clone the repository or your fork
+
+    ```console
+    $ git clone https://github.com/cod-ed/handwrite`
+    ```
+
+4. (Optional) Make a virtual environment and activate it
+
+    ```console
+    $ python -m venv .venv
+    $ source .venv/bin/activate
+    ```
+
+5. In the project directory run:
+
+    ```console
+    $ pip install -e .
+    ```
+
+6. Make sure the tests run:
+
+    ```console
+    $ python setup.py test
+    ```
+
+You are ready to go!
+
+## Windows
+
+1. Install [Potrace](http://potrace.sourceforge.net/#downloading) and make sure it's in your PATH.
+
+2. Install [fontforge](https://fontforge.org/en-US/downloads/) and make sure scripting is enabled.
+
+3. Clone the repository or your fork
+
+    ```console
+    > git clone https://github.com/cod-ed/handwrite
+    ```
+
+4. (Optional) Make a virtual environment and activate it
+
+    ```console
+    > python -m venv .venv
+    > .venv\Scripts\activate
+    ```
+
+5. In the project directory run:
+
+    ```console
+    > pip install -e .
+    ```
+
+6. Make sure the tests run:
+
+    ```console
+    > python setup.py test
+    ```
+
+You are ready to go!
