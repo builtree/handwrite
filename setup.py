@@ -5,9 +5,9 @@ with open("README.md", "r", encoding="utf-8") as fh:
 
 setuptools.setup(
     name="handwrite",
-    version="0.0.0",
-    author="Yash Lamba, Saksham Arora",
-    author_email="yashlamba2000@gmail.com, sakshamarora1001@gmail.com",
+    version="0.1.0",
+    author="Yash Lamba, Saksham Arora, Aryan Gupta",
+    author_email="yashlamba2000@gmail.com, sakshamarora1001@gmail.com, aryangupta973@gmail.com",
     description="Convert text to custom handwriting",
     long_description=long_description,
     long_description_content_type="text/markdown",
