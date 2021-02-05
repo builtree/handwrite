@@ -24,7 +24,13 @@ Handwrite is also helpful for those with dysgraphia.
 
 # Installing
 
-[Awating Release]
+1. Install [fontforge](https://fontforge.org/en-US/)
+
+2. Install [Potrace](http://potrace.sourceforge.net/)
+
+3. Install handwrite:
+
+   `pip install handwrite`
 
 # Usage
 
