@@ -14,7 +14,10 @@ setuptools.setup(
     url="https://github.com/cod-ed/handwrite",
     packages=setuptools.find_packages(),
     install_requires=["opencv-python", "Pillow"],
-    entry_points={"console_scripts": ["handwrite = handwrite.cli:main"],},
+    entry_points={
+        "console_scripts": ["handwrite = handwrite.cli:main"],
+    },
+    include_package_data=True,
     classifiers=[
         "Programming Language :: Python :: 3",
         "License :: OSI Approved :: MIT License",
