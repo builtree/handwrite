@@ -36,16 +36,19 @@ class SheetToPNG:
         rows : int, default=10
             Number of rows of expected contours. Defaults to 10 based on the default sample.
         """
-        # TODO If directory given instead of image file, read all images and wrtie the images
-        # (example) 0.png, 1.png, 2.png inside every character folder in characters/
-        # sheet_images = []
-        # for s in os.listdir(sheet_dir):
-        #     sheet_images.append(cv2.imread(sheet_dir + "/" + s))
-
-        characters = self.detect_characters(
-            sheet, threshold_value, cols=cols, rows=rows
-        )
-        self.save_images(characters, characters_dir)
+        # If directory given instead of image file, read all images and write the images
+        # as 0.png, 1.png, 2.png inside every character sub-folder
+        if os.path.isdir(sheet):
+            for i, s in enumerate(os.listdir(sheet)):
+                characters = self.detect_characters(
+                    sheet + os.sep + s, threshold_value, cols=cols, rows=rows
+                )
+                self.save_images(characters, characters_dir, index=i)
+        else:
+            characters = self.detect_characters(
+                sheet, threshold_value, cols=cols, rows=rows
+            )
+            self.save_images(characters, characters_dir, index=0)
 
     def detect_characters(self, sheet_image, threshold_value, cols=8, rows=10):
         """Detect contours on the input image and filter them to get only characters.
@@ -129,12 +132,12 @@ class SheetToPNG:
 
         return sorted_characters
 
-    def save_images(self, characters, characters_dir):
+    def save_images(self, characters, characters_dir, index):
         """Create directory for each character and save as PNG.
 
         Creates directory and PNG file for each image as following:
 
-            characters_dir/ord(character)/ord(character).png
+            characters_dir/ord(character)/index.png
 
         Parameters
         ----------
@@ -147,12 +150,12 @@ class SheetToPNG:
             os.mkdir(characters_dir)
 
         # Create directory for each character and save the png for the characters
-        # Structure: UserProvidedDir/ord(character)/ord(character).png
+        # Structure: UserProvidedDir/ord(character)/index.png
         for k, images in enumerate(characters):
             character = os.path.join(characters_dir, str(ALL_CHARS[k]))
             if not os.path.exists(character):
                 os.mkdir(character)
+            # print(index, os.path.join(character, str(index) + ".png"), images[0].shape)
             cv2.imwrite(
-                os.path.join(character, str(ALL_CHARS[k]) + ".png"),
-                images[0],
+                os.path.join(character, str(index) + ".png"), images[0],
             )

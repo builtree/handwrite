@@ -5,17 +5,22 @@
     "em": 1000,
     "encoding": "UnicodeFull",
     "lang": "English (US)",
-    "filename": "MyFont",
-    "style": "Regular"
+    "filename": ["FirstFont", "SecondFont"],
+    "style": ["Regular", "Bold"]
   },
   "sfnt_names": [
-    { "Copyright": "Copyright (c) 2021 by Nobody" },
-    { "Family": "MyFont" },
-    { "SubFamily": "Regular" },
-    { "UniqueID": "MyFont 2021-02-04" },
-    { "Fullname": "MyFont Regular" },
-    { "Version": "Version 001.000" },
-    { "PostScriptName": "MyFont-Regular" }
+    {
+      "Copyright": [
+        "Copyright (c) 2021 by Nobody",
+        "Copyright (c) 2021 by Somebody"
+      ]
+    },
+    { "Family": ["FirstFont", "SecondFont"] },
+    { "SubFamily": ["Regular", "Bold"] },
+    { "UniqueID": ["FirstFont 2021-02-04", "FirstFont 2021-02-09"] },
+    { "Fullname": ["FirstFont Regular", "SecondFont Bold"] },
+    { "Version": ["Version 001.000", "Version 001.000"] },
+    { "PostScriptName": ["FirstFont-Regular", "SecondFont-Bold"] }
   ],
   "glyphs": [
     65,

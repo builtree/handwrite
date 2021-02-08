@@ -10,7 +10,7 @@ class SVGtoTTF:
     def __init__(self):
         pass
 
-    def convert(self, directory, outfile, config):
+    def convert(self, directory, outdir, config, num_of_sheets):
         if directory[-1] not in "\/":
             directory = directory + "/"
         subprocess.run(
@@ -20,25 +20,31 @@ class SVGtoTTF:
                 os.path.realpath(__file__),
                 config,
                 directory,
-                outfile,
+                outdir,
+                str(num_of_sheets),
             ]
         )
 
 
 def loadConfig(filename="default"):
-    if filename == "default":
+    if filename in ["default", "default_multiple"]:
         filename = os.path.join(
-            os.path.dirname(os.path.realpath(__file__)), "default.json"
+            os.path.dirname(os.path.realpath(__file__)), filename + ".json"
         )
     with open(filename) as f:
         return json.load(f)
 
 
-def setProperties(font, config):
+def setProperties(font, config, index):
     props = config["props"]
     lang = props.pop("lang", "English (US)")
     family = props.get("filename", "Example")
-    style = props.pop("style", "Regular")
+    style = props.get("style", "Regular")
+    if isinstance(family, list):
+        family = family[index]
+    if isinstance(style, list):
+        style = style[index]
+
     font.familyname = family
     font.fontname = family + "-" + style
     font.fullname = family + " " + style
@@ -51,10 +57,13 @@ def setProperties(font, config):
             setattr(font, k, v)
 
     for t in config.get("sfnt_names", []):
-        font.appendSFNTName(str(lang), str(t[0]), str(t[1]))
+        k, v = t.popitem()
+        if isinstance(v, list):
+            v = v[index]
+        font.appendSFNTName(str(lang), str(k), str(v))
 
 
-def addGlyphs(font, config, unicode_mapping, directory):
+def addGlyphs(font, config, unicode_mapping, directory, index):
     space = font.createMappedChar(ord(" "))
     space.width = 500
 
@@ -62,7 +71,7 @@ def addGlyphs(font, config, unicode_mapping, directory):
         g = font.createMappedChar(k)
         unicode_mapping.setdefault(k, g.glyphname)
         # Get outlines
-        src = "{}/{}.svg".format(k, k)
+        src = "{}/{}.svg".format(k, index)
         # if not isinstance(v, dict):
         v = {"src": src}
         # src = "%s%s%s" % (config.get("input", "."), os.path.sep, v.pop("src", src))
@@ -109,13 +118,13 @@ def setKerning(font, table):
     # print(font.getKerningClass("kern-1"))
 
 
-def main(config_file, directory, outdir):
+def main(config_file, directory, outdir, index):
     config = loadConfig(config_file)
     font = fontforge.font()
     unicode_mapping = {}
 
-    setProperties(font, config)
-    addGlyphs(font, config, unicode_mapping, directory)
+    setProperties(font, config, index)
+    addGlyphs(font, config, unicode_mapping, directory, index)
 
     # bearing table
     setBearings(
@@ -126,7 +135,10 @@ def main(config_file, directory, outdir):
     setKerning(font, config["typography_parameters"].get("kerning_table", {}))
 
     # Generate font and save as a .ttf file
-    outfile = outdir + os.sep + str(config["props"].get("filename", "Example"))
+    filename = config["props"].get("filename", "Example")
+    if isinstance(filename, list):
+        filename = filename[index]
+    outfile = outdir + os.sep + str(filename)
     outfile = outfile + ".ttf" if not outfile.endswith(".ttf") else outfile
     sys.stderr.write("\nGenerating %s...\n" % outfile)
     font.generate(outfile)
@@ -134,7 +146,8 @@ def main(config_file, directory, outdir):
 
 if __name__ == "__main__":
     if len(sys.argv) > 1:
-        main(sys.argv[1], sys.argv[2], sys.argv[3])
+        for i in range(int(sys.argv[4])):
+            main(sys.argv[1], sys.argv[2], sys.argv[3], i)
     else:
         sys.stderr.write(
             "\nUsage: %s something.json output_font_name.ttf" % sys.argv[0]

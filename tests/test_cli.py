@@ -41,8 +41,27 @@ class TestCLI(unittest.TestCase):
         for i in ALL_CHARS:
             for suffix in [".bmp", ".png", ".svg"]:
                 self.assertTrue(
-                    os.path.exists(
-                        os.path.join(self.temp_dir, f"{i}" + os.sep + f"{i}{suffix}")
-                    )
+                    os.path.exists(os.path.join(self.temp_dir, f"{i}", f"0{suffix}"))
                 )
         self.assertTrue(os.path.exists(os.path.join(self.temp_dir, "MyFont.ttf")))
+
+        # Check working with multiple inputs
+        subprocess.call(
+            [
+                "handwrite",
+                "--directory",
+                self.temp_dir,
+                os.path.join(self.file_dir, "test_data", "sheettopng"),
+                self.temp_dir,
+            ]
+        )
+        for c in ALL_CHARS:
+            for suffix in [".bmp", ".png", ".svg"]:
+                for index in range(2):
+                    self.assertTrue(
+                        os.path.exists(
+                            os.path.join(self.temp_dir, f"{c}", f"{index}{suffix}")
+                        )
+                    )
+        self.assertTrue(os.path.exists(os.path.join(self.temp_dir, "FirstFont.ttf")))
+        self.assertTrue(os.path.exists(os.path.join(self.temp_dir, "SecondFont.ttf")))

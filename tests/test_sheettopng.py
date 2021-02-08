@@ -19,14 +19,21 @@ class TestSheetToPNG(unittest.TestCase):
         shutil.rmtree(self.directory)
 
     def test_convert(self):
+        # Single sheet input
         excellent_scan = os.path.join(self.sheets_path, "excellent.jpg")
         self.converter.convert(excellent_scan, self.directory)
         for i in ALL_CHARS:
             self.assertTrue(
-                os.path.exists(
-                    os.path.join(self.directory, f"{i}" + os.sep + f"{i}.png")
-                )
+                os.path.exists(os.path.join(self.directory, f"{i}", "0.png"))
             )
+
+        # Multiple sheet input
+        self.converter.convert(self.sheets_path, self.directory)
+        for i in ALL_CHARS:
+            for index in range(2):
+                self.assertTrue(
+                    os.path.exists(os.path.join(self.directory, f"{i}", f"{index}.png"))
+                )
 
     # TODO Once all the errors are done for detect_characters
     # Write tests to check each kind of scan and whether it raises
