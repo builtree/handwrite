@@ -81,7 +81,7 @@ Here's the end result!
 2. Install fontforge using apt
 
     ```console
-    sudo apt-get install potrace
+    sudo apt-get install fontforge
     ```
 
 3. Clone the repository or your fork
