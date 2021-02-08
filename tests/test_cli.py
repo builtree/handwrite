@@ -15,7 +15,7 @@ class TestCLI(unittest.TestCase):
     def tearDown(self):
         shutil.rmtree(self.temp_dir)
 
-    def test_handwrite(self):
+    def test_handwrite_single(self):
         # Check working with excellent input and no optional parameters
         subprocess.call(
             [
@@ -26,6 +26,7 @@ class TestCLI(unittest.TestCase):
         )
         self.assertTrue(os.path.exists(os.path.join(self.temp_dir, "MyFont.ttf")))
 
+    def test_handwrite_optional_single(self):
         # Check working with optional parameters
         subprocess.call(
             [
@@ -45,6 +46,7 @@ class TestCLI(unittest.TestCase):
                 )
         self.assertTrue(os.path.exists(os.path.join(self.temp_dir, "MyFont.ttf")))
 
+    def test_handwrite_optional_multiple(self):
         # Check working with multiple inputs
         subprocess.call(
             [

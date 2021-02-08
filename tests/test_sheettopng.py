@@ -18,7 +18,7 @@ class TestSheetToPNG(unittest.TestCase):
     def tearDown(self):
         shutil.rmtree(self.directory)
 
-    def test_convert(self):
+    def test_convert_single(self):
         # Single sheet input
         excellent_scan = os.path.join(self.sheets_path, "excellent.jpg")
         self.converter.convert(excellent_scan, self.directory)
@@ -27,6 +27,7 @@ class TestSheetToPNG(unittest.TestCase):
                 os.path.exists(os.path.join(self.directory, f"{i}", "0.png"))
             )
 
+    def test_convert_multiple(self):
         # Multiple sheet input
         self.converter.convert(self.sheets_path, self.directory)
         for i in ALL_CHARS:
