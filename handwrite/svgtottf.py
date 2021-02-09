@@ -8,8 +8,6 @@ IMPORT_OPTIONS = ("removeoverlap", "correctdir")
 
 class SVGtoTTF:
     def convert(self, directory, outdir, config, sheet):
-        if directory[-1] not in "\/":
-            directory = directory + "/"
         subprocess.run(
             [
                 "fontforge",
@@ -34,7 +32,7 @@ def loadConfig(filename="default"):
 
 def setProperties(font, config, index):
     props = config["props"]
-    lang = props.pop("lang", "English (US)")
+    lang = props.get("lang", "English (US)")
     family = props.get("filename", "Example")
     style = props.get("style", "Regular")
     if isinstance(family, list):
@@ -45,7 +43,7 @@ def setProperties(font, config, index):
     font.familyname = family
     font.fontname = family + "-" + style
     font.fullname = family + " " + style
-    font.encoding = props.pop("encoding", "UnicodeFull")
+    font.encoding = props.get("encoding", "UnicodeFull")
 
     for k, v in props.items():
         if hasattr(font, k):
@@ -64,22 +62,14 @@ def addGlyphs(font, config, unicode_mapping, directory):
     space.width = 500
 
     for k in config["glyphs"]:
+        # Create character glyph
         g = font.createMappedChar(k)
         unicode_mapping.setdefault(k, g.glyphname)
         # Get outlines
         src = "{}/{}.svg".format(k, k)
-        # if not isinstance(v, dict):
-        v = {"src": src}
-        # src = "%s%s%s" % (config.get("input", "."), os.path.sep, v.pop("src", src))
-        src = "%s%s" % (directory, v.pop("src", src))
+        src = directory + os.sep + src
         g.importOutlines(src, IMPORT_OPTIONS)
         g.removeOverlap()
-        # Copy attributes
-        for k2, v2 in v.items():
-            if hasattr(g, k2):
-                if isinstance(v2, list):
-                    v2 = tuple(v2)
-                setattr(g, k2, v2)
 
 
 def setBearings(font, bearings, unicode_mapping):
@@ -115,12 +105,12 @@ def setKerning(font, table):
     # print(font.getKerningClass("kern-1"))
 
 
-def generateFont(config, characters_dir, outdir, index=0):
+def generateFont(config, directory, outdir, index=0):
     font = fontforge.font()
     unicode_mapping = {}
 
     setProperties(font, config, index)
-    addGlyphs(font, config, unicode_mapping, characters_dir)
+    addGlyphs(font, config, unicode_mapping, directory)
 
     # bearing table
     setBearings(
@@ -131,9 +121,12 @@ def generateFont(config, characters_dir, outdir, index=0):
     setKerning(font, config["typography_parameters"].get("kerning_table", {}))
 
     # Generate font and save as a .ttf file
-    filename = config["props"].get("filename", "Example")
-    if isinstance(filename, list):
+    filename = config["props"].get("filename", None)
+    if filename is None:
+        raise NameError("filename not found in config file.")
+    elif isinstance(filename, list):
         filename = filename[index]
+
     outfile = outdir + os.sep + str(filename)
     outfile = outfile + ".ttf" if not outfile.endswith(".ttf") else outfile
     sys.stderr.write("\nGenerating %s...\n" % outfile)
@@ -145,9 +138,7 @@ def main(config_file, directory, outdir, sheet):
 
     if os.path.isdir(sheet):
         for index, sheet_name in enumerate(os.listdir(sheet)):
-            characters_dir = (
-                os.path.join(directory, os.path.splitext(sheet_name)[0]) + "/"
-            )
+            characters_dir = directory + os.sep + os.path.splitext(sheet_name)[0]
             generateFont(config, characters_dir, outdir, index)
     else:
         generateFont(config, directory, outdir)
