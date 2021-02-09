@@ -5,6 +5,10 @@
     </a>
 </p>
 
+![Tests](https://github.com/cod-ed/handwrite/workflows/Tests/badge.svg)
+[![PyPI version](https://img.shields.io/pypi/v/handwrite.svg)](https://pypi.org/project/handwrite)
+[![Gitter chat](https://badges.gitter.im/gitterHQ/gitter.svg)](https://gitter.im/codEd-org/handwrite)
+
 # Handwrite - Type in your Handwriting!
 
 Ever had those long-winded assignments, that the teacher always wants handwritten?
@@ -30,7 +34,9 @@ Handwrite is also helpful for those with dysgraphia.
 
 3. Install handwrite:
 
-   `pip install handwrite`
+    ```console
+    pip install handwrite
+    ```
 
 # Usage
 
