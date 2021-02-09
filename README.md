@@ -75,7 +75,7 @@ Here's the end result!
 1. Install Potrace using apt
 
     ```console
-    $ sudo apt-get install potrace
+    sudo apt-get install potrace
     ```
 
 2. Install fontforge using apt
@@ -87,7 +87,7 @@ Here's the end result!
 3. Clone the repository or your fork
 
     ```console
-    git clone https://github.com/cod-ed/handwrite`
+    git clone https://github.com/cod-ed/handwrite
     ```
 
 4. (Optional) Make a virtual environment and activate it
