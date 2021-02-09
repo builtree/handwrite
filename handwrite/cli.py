@@ -1,4 +1,3 @@
-import os
 import shutil
 import argparse
 import tempfile
@@ -23,16 +22,10 @@ def main():
     directory = args.directory
     if not directory:
         directory = tempfile.mkdtemp()
-    num_of_sheets = 1
-    if os.path.isdir(args.sheet) and args.config == "default":
-        args.config = "default_multiple"
-        num_of_sheets = len(list(os.listdir(args.sheet)))
 
     SheetToPNG().convert(args.sheet, directory)
     PngToSvg().convert(directory=directory)
-    SVGtoTTF().convert(
-        directory, args.output, args.config, num_of_sheets
-    )
+    SVGtoTTF().convert(directory, args.output, args.config, args.sheet)
 
     if not args.directory:
         shutil.rmtree(directory)

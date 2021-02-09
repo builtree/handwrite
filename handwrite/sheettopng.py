@@ -36,19 +36,24 @@ class SheetToPNG:
         rows : int, default=10
             Number of rows of expected contours. Defaults to 10 based on the default sample.
         """
-        # If directory given instead of image file, read all images and write the images
-        # as 0.png, 1.png, 2.png inside every character sub-folder
         if os.path.isdir(sheet):
-            for i, s in enumerate(os.listdir(sheet)):
+            # If directory given instead of sheet image file, read all images and write the images
+            # into subfolders named after the sheet filenames inside characters_dir
+            # characters_dir/sheet_filename/65 , characters_dir/sheet_filename/66 and so on
+            for sheet_name in os.listdir(sheet):
                 characters = self.detect_characters(
-                    sheet + os.sep + s, threshold_value, cols=cols, rows=rows
+                    sheet + os.sep + sheet_name, threshold_value, cols=cols, rows=rows
                 )
-                self.save_images(characters, characters_dir, index=i)
+                self.save_images(
+                    characters,
+                    os.path.join(characters_dir, os.path.splitext(sheet_name)[0]),
+                )
         else:
+            # characters_dir/65 , characters_dir/66 and so on
             characters = self.detect_characters(
                 sheet, threshold_value, cols=cols, rows=rows
             )
-            self.save_images(characters, characters_dir, index=0)
+            self.save_images(characters, characters_dir)
 
     def detect_characters(self, sheet_image, threshold_value, cols=8, rows=10):
         """Detect contours on the input image and filter them to get only characters.
@@ -132,12 +137,13 @@ class SheetToPNG:
 
         return sorted_characters
 
-    def save_images(self, characters, characters_dir, index):
+    def save_images(self, characters, characters_dir):
         """Create directory for each character and save as PNG.
 
         Creates directory and PNG file for each image as following:
 
-            characters_dir/ord(character)/index.png
+            characters_dir/ord(character)/ord(character).png  (SINGLE SHEET INPUT)
+            characters_dir/sheet_filename/ord(character)/ord(character).png  (MULTIPLE SHEETS INPUT)
 
         Parameters
         ----------
@@ -146,16 +152,15 @@ class SheetToPNG:
         characters_dir : str
             Path to directory to save characters in.
         """
-        if not os.path.exists(characters_dir):
-            os.mkdir(characters_dir)
+        os.makedirs(characters_dir, exist_ok=True)
 
         # Create directory for each character and save the png for the characters
-        # Structure: UserProvidedDir/ord(character)/index.png
+        # Structure (single sheet): UserProvidedDir/ord(character)/ord(character).png
+        # Structure (multiple sheets): UserProvidedDir/sheet_filename/ord(character)/ord(character).png
         for k, images in enumerate(characters):
             character = os.path.join(characters_dir, str(ALL_CHARS[k]))
             if not os.path.exists(character):
                 os.mkdir(character)
-            # print(index, os.path.join(character, str(index) + ".png"), images[0].shape)
             cv2.imwrite(
-                os.path.join(character, str(index) + ".png"), images[0],
+                os.path.join(character, str(ALL_CHARS[k]) + ".png"), images[0],
             )

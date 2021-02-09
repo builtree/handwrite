@@ -8,15 +8,15 @@
     "filename": "MyFont",
     "style": "Regular"
   },
-  "sfnt_names": [
-    { "Copyright": "Copyright (c) 2021 by Nobody" },
-    { "Family": "MyFont" },
-    { "SubFamily": "Regular" },
-    { "UniqueID": "MyFont 2021-02-04" },
-    { "Fullname": "MyFont Regular" },
-    { "Version": "Version 001.000" },
-    { "PostScriptName": "MyFont-Regular" }
-  ],
+  "sfnt_names": { 
+    "Copyright": "Copyright (c) 2021 by Nobody",
+    "Family": "MyFont",
+    "SubFamily": "Regular",
+    "UniqueID": "MyFont 2021-02-04",
+    "Fullname": "MyFont Regular",
+    "Version": "Version 001.000",
+    "PostScriptName": "MyFont-Regular" 
+  },
   "glyphs": [
     65,
     66,

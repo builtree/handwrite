@@ -24,16 +24,23 @@ class TestSheetToPNG(unittest.TestCase):
         self.converter.convert(excellent_scan, self.directory)
         for i in ALL_CHARS:
             self.assertTrue(
-                os.path.exists(os.path.join(self.directory, f"{i}", "0.png"))
+                os.path.exists(os.path.join(self.directory, f"{i}", f"{i}.png"))
             )
 
     def test_convert_multiple(self):
         # Multiple sheet input
         self.converter.convert(self.sheets_path, self.directory)
-        for i in ALL_CHARS:
-            for index in range(2):
+        for sheet_name in os.listdir(self.sheets_path):
+            for i in ALL_CHARS:
                 self.assertTrue(
-                    os.path.exists(os.path.join(self.directory, f"{i}", f"{index}.png"))
+                    os.path.exists(
+                        os.path.join(
+                            self.directory,
+                            os.path.splitext(sheet_name)[0],
+                            f"{i}",
+                            f"{i}.png",
+                        )
+                    )
                 )
 
     # TODO Once all the errors are done for detect_characters

@@ -7,10 +7,7 @@ IMPORT_OPTIONS = ("removeoverlap", "correctdir")
 
 
 class SVGtoTTF:
-    def __init__(self):
-        pass
-
-    def convert(self, directory, outdir, config, num_of_sheets):
+    def convert(self, directory, outdir, config, sheet):
         if directory[-1] not in "\/":
             directory = directory + "/"
         subprocess.run(
@@ -21,7 +18,7 @@ class SVGtoTTF:
                 config,
                 directory,
                 outdir,
-                str(num_of_sheets),
+                sheet,
             ]
         )
 
@@ -56,14 +53,13 @@ def setProperties(font, config, index):
                 v = tuple(v)
             setattr(font, k, v)
 
-    for t in config.get("sfnt_names", []):
-        k, v = t.popitem()
+    for k, v in config.get("sfnt_names", {}).items():
         if isinstance(v, list):
             v = v[index]
         font.appendSFNTName(str(lang), str(k), str(v))
 
 
-def addGlyphs(font, config, unicode_mapping, directory, index):
+def addGlyphs(font, config, unicode_mapping, directory):
     space = font.createMappedChar(ord(" "))
     space.width = 500
 
@@ -71,7 +67,7 @@ def addGlyphs(font, config, unicode_mapping, directory, index):
         g = font.createMappedChar(k)
         unicode_mapping.setdefault(k, g.glyphname)
         # Get outlines
-        src = "{}/{}.svg".format(k, index)
+        src = "{}/{}.svg".format(k, k)
         # if not isinstance(v, dict):
         v = {"src": src}
         # src = "%s%s%s" % (config.get("input", "."), os.path.sep, v.pop("src", src))
@@ -87,7 +83,7 @@ def addGlyphs(font, config, unicode_mapping, directory, index):
 
 
 def setBearings(font, bearings, unicode_mapping):
-    default = bearings.pop("Default")
+    default = bearings.get("Default", [60, 60])
 
     for k, v in bearings.items():
         if v[0] == None:
@@ -95,9 +91,10 @@ def setBearings(font, bearings, unicode_mapping):
         if v[1] == None:
             v[1] = default[1]
 
-        glyph_name = unicode_mapping[ord(str(k))]
-        font[glyph_name].left_side_bearing = v[0]
-        font[glyph_name].right_side_bearing = v[1]
+        if k != "Default":
+            glyph_name = unicode_mapping[ord(str(k))]
+            font[glyph_name].left_side_bearing = v[0]
+            font[glyph_name].right_side_bearing = v[1]
 
 
 def setKerning(font, table):
@@ -118,13 +115,12 @@ def setKerning(font, table):
     # print(font.getKerningClass("kern-1"))
 
 
-def main(config_file, directory, outdir, index):
-    config = loadConfig(config_file)
+def generateFont(config, characters_dir, outdir, index=0):
     font = fontforge.font()
     unicode_mapping = {}
 
     setProperties(font, config, index)
-    addGlyphs(font, config, unicode_mapping, directory, index)
+    addGlyphs(font, config, unicode_mapping, characters_dir)
 
     # bearing table
     setBearings(
@@ -144,10 +140,22 @@ def main(config_file, directory, outdir, index):
     font.generate(outfile)
 
 
+def main(config_file, directory, outdir, sheet):
+    config = loadConfig(config_file)
+
+    if os.path.isdir(sheet):
+        for index, sheet_name in enumerate(os.listdir(sheet)):
+            characters_dir = (
+                os.path.join(directory, os.path.splitext(sheet_name)[0]) + "/"
+            )
+            generateFont(config, characters_dir, outdir, index)
+    else:
+        generateFont(config, directory, outdir)
+
+
 if __name__ == "__main__":
     if len(sys.argv) > 1:
-        for i in range(int(sys.argv[4])):
-            main(sys.argv[1], sys.argv[2], sys.argv[3], i)
+        main(sys.argv[1], sys.argv[2], sys.argv[3], sys.argv[4])
     else:
         sys.stderr.write(
             "\nUsage: %s something.json output_font_name.ttf" % sys.argv[0]

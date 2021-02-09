@@ -15,7 +15,7 @@ class TestCLI(unittest.TestCase):
     def tearDown(self):
         shutil.rmtree(self.temp_dir)
 
-    def test_handwrite_single(self):
+    def test_single_input(self):
         # Check working with excellent input and no optional parameters
         subprocess.call(
             [
@@ -26,7 +26,7 @@ class TestCLI(unittest.TestCase):
         )
         self.assertTrue(os.path.exists(os.path.join(self.temp_dir, "MyFont.ttf")))
 
-    def test_handwrite_optional_single(self):
+    def test_single_input_with_optional_parameters(self):
         # Check working with optional parameters
         subprocess.call(
             [
@@ -42,28 +42,36 @@ class TestCLI(unittest.TestCase):
         for i in ALL_CHARS:
             for suffix in [".bmp", ".png", ".svg"]:
                 self.assertTrue(
-                    os.path.exists(os.path.join(self.temp_dir, f"{i}", f"0{suffix}"))
+                    os.path.exists(os.path.join(self.temp_dir, f"{i}", f"{i}{suffix}"))
                 )
         self.assertTrue(os.path.exists(os.path.join(self.temp_dir, "MyFont.ttf")))
 
-    def test_handwrite_optional_multiple(self):
+    def test_multiple_inputs(self):
         # Check working with multiple inputs
+        sheets_dir = os.path.join(self.file_dir, "test_data", "sheettopng")
         subprocess.call(
             [
                 "handwrite",
                 "--directory",
                 self.temp_dir,
-                os.path.join(self.file_dir, "test_data", "sheettopng"),
+                sheets_dir,
                 self.temp_dir,
+                "--config",
+                os.path.join(self.file_dir, "test_data", "multiple.json"),
             ]
         )
-        for c in ALL_CHARS:
-            for suffix in [".bmp", ".png", ".svg"]:
-                for index in range(2):
+        for sheet_name in os.listdir(sheets_dir):
+            for i in ALL_CHARS:
+                for suffix in [".bmp", ".png", ".svg"]:
                     self.assertTrue(
                         os.path.exists(
-                            os.path.join(self.temp_dir, f"{c}", f"{index}{suffix}")
+                            os.path.join(
+                                self.temp_dir,
+                                os.path.splitext(sheet_name)[0],
+                                f"{i}",
+                                f"{i}{suffix}",
+                            )
                         )
                     )
-        self.assertTrue(os.path.exists(os.path.join(self.temp_dir, "FirstFont.ttf")))
-        self.assertTrue(os.path.exists(os.path.join(self.temp_dir, "SecondFont.ttf")))
+        self.assertTrue(os.path.exists(os.path.join(self.temp_dir, "MyFont.ttf")))
+        self.assertTrue(os.path.exists(os.path.join(self.temp_dir, "MyFont2.ttf")))
