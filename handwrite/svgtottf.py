@@ -98,7 +98,7 @@ def generateFontFile(filename, outdir, config_file, font):
     if filename is None:
         raise NameError("filename not found in config file.")
 
-    outfile = (
+    outfile = str(
         outdir
         + os.sep
         + (filename + ".ttf" if not filename.endswith(".ttf") else filename)
