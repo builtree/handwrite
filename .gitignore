@@ -50,6 +50,7 @@ coverage.xml
 *.py,cover
 .hypothesis/
 .pytest_cache/
+./tests/test_data/config_data/config/excellent.json
 
 # Translations
 *.mo

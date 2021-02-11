@@ -105,7 +105,7 @@ def generateFontFile(filename, outdir, config_file, font):
     )
 
     if os.path.exists(outfile):
-        outfile = (
+        outfile = str(
             os.path.splitext(outfile)[0]
             + "-"
             + os.path.splitext(os.path.basename(config_file))[0]
