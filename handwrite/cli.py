@@ -53,7 +53,10 @@ def main():
                 configs_dir + os.sep + os.path.splitext(sheet_name)[0] + ".json"
             )
             if not os.path.exists(config_file):
-                shutil.copyfile(args.config, config_file)
+                if os.path.isdir(args.config):
+                    shutil.copyfile(default_config, config_file)
+                else:
+                    shutil.copyfile(args.config, config_file)
 
             characters_dir = directory + os.sep + os.path.splitext(sheet_name)[0]
             os.makedirs(characters_dir, exist_ok=True)
