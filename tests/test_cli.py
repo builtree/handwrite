@@ -56,11 +56,9 @@ class TestCLI(unittest.TestCase):
                 self.temp_dir,
                 sheets_dir,
                 self.temp_dir,
-                "--config",
-                os.path.join(self.file_dir, "test_data", "multiple.json"),
             ]
         )
-        for sheet_name in os.listdir(sheets_dir):
+        for sheet_name in sorted(os.listdir(sheets_dir)):
             for i in ALL_CHARS:
                 for suffix in [".bmp", ".png", ".svg"]:
                     self.assertTrue(
@@ -74,4 +72,4 @@ class TestCLI(unittest.TestCase):
                         )
                     )
         self.assertTrue(os.path.exists(os.path.join(self.temp_dir, "MyFont.ttf")))
-        self.assertTrue(os.path.exists(os.path.join(self.temp_dir, "MyFont2.ttf")))
+        self.assertTrue(os.path.exists(os.path.join(self.temp_dir, "MyFont-excellent2.ttf")))

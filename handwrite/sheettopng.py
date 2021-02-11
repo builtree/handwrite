@@ -36,24 +36,12 @@ class SheetToPNG:
         rows : int, default=10
             Number of rows of expected contours. Defaults to 10 based on the default sample.
         """
-        if os.path.isdir(sheet):
-            # If directory given instead of sheet image file, read all images and write the images
-            # into subfolders named after the sheet filenames inside characters_dir
-            # characters_dir/sheet_filename/65 , characters_dir/sheet_filename/66 and so on
-            for sheet_name in os.listdir(sheet):
-                characters = self.detect_characters(
-                    sheet + os.sep + sheet_name, threshold_value, cols=cols, rows=rows
-                )
-                self.save_images(
-                    characters,
-                    os.path.join(characters_dir, os.path.splitext(sheet_name)[0]),
-                )
-        else:
-            # characters_dir/65 , characters_dir/66 and so on
-            characters = self.detect_characters(
-                sheet, threshold_value, cols=cols, rows=rows
-            )
-            self.save_images(characters, characters_dir)
+        characters = self.detect_characters(
+            sheet, threshold_value, cols=cols, rows=rows
+        )
+        self.save_images(
+            characters, characters_dir,
+        )
 
     def detect_characters(self, sheet_image, threshold_value, cols=8, rows=10):
         """Detect contours on the input image and filter them to get only characters.

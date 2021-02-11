@@ -18,7 +18,7 @@
     "UniqueID": ["MyFont 2021-02-04", "MyFont2 2021-02-09"],
     "Fullname": ["MyFont Regular", "MyFont2 Bold"],
     "Version": ["Version 001.000", "Version 001.000"],
-    "PostScriptName": ["MyFont-Regular", "MyFont-Bold"]
+    "PostScriptName": ["MyFont-Regular", "MyFont2-Bold"]
   },
   "glyphs": [
     65,

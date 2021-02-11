@@ -18,7 +18,7 @@ class TestSheetToPNG(unittest.TestCase):
     def tearDown(self):
         shutil.rmtree(self.directory)
 
-    def test_convert_single(self):
+    def test_convert(self):
         # Single sheet input
         excellent_scan = os.path.join(self.sheets_path, "excellent.jpg")
         self.converter.convert(excellent_scan, self.directory)
@@ -26,22 +26,6 @@ class TestSheetToPNG(unittest.TestCase):
             self.assertTrue(
                 os.path.exists(os.path.join(self.directory, f"{i}", f"{i}.png"))
             )
-
-    def test_convert_multiple(self):
-        # Multiple sheet input
-        self.converter.convert(self.sheets_path, self.directory)
-        for sheet_name in os.listdir(self.sheets_path):
-            for i in ALL_CHARS:
-                self.assertTrue(
-                    os.path.exists(
-                        os.path.join(
-                            self.directory,
-                            os.path.splitext(sheet_name)[0],
-                            f"{i}",
-                            f"{i}.png",
-                        )
-                    )
-                )
 
     # TODO Once all the errors are done for detect_characters
     # Write tests to check each kind of scan and whether it raises
