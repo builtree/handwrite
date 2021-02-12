@@ -1,13 +1,14 @@
 import sys
 import os.path
 import json
-import subprocess
 
 IMPORT_OPTIONS = ("removeoverlap", "correctdir")
 
 
 class SVGtoTTF:
     def convert(self, directory, outdir, config):
+        import subprocess
+
         subprocess.run(
             [
                 "fontforge",
