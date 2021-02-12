@@ -173,6 +173,7 @@ class TestCLI(unittest.TestCase):
 
     def test_multiple_inputs_without_directory(self):
         configs_dir = os.path.join(self.file_dir, "test_data", "config_data", "configs")
+        # Check working with sheet and config directory but no character directory
         subprocess.call(
             ["handwrite", self.sheets_dir, self.temp_dir, "--config", configs_dir,]
         )
