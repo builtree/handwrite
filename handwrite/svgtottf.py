@@ -87,16 +87,23 @@ def setKerning(font, table):
     cols = table["cols"]
     cols = [list(i) if i != None else None for i in cols]
 
-    # kerning_table = table["table"]
-    # flatten_list = (
-    #     lambda y: [x for a in y for x in flatten_list(a)] if type(y) is list else [y]
-    # )
-    # kerning_list = [0 if x == None else x for x in flatten_list(kerning_table)]
-
     font.addLookup("kern", "gpos_pair", 0, [["kern", [["latn", ["dflt"]]]]])
-    font.addKerningClass("kern", "kern-1", 0, rows, cols, True)
-    # font.autoKern("kern-1", 0, rows, cols)
-    # print(font.getKerningClass("kern-1"))
+
+    if table.get("autokern", True):
+        font.addKerningClass(
+            "kern", "kern-1", table.get("seperation", 0), rows, cols, True
+        )
+    else:
+        kerning_table = table.get("table", False)
+        if not kerning_table:
+            raise ValueError("Kerning offsets not found in the config file.")
+        flatten_list = (
+            lambda y: [x for a in y for x in flatten_list(a)]
+            if type(y) is list
+            else [y]
+        )
+        offsets = [0 if x == None else x for x in flatten_list(kerning_table)]
+        font.addKerningClass("kern", "kern-1", rows, cols, offsets)
 
 
 def generateFontFile(filename, outdir, config_file, font):
