@@ -9,7 +9,7 @@ from handwrite import SVGtoTTF
 
 
 def converters(sheet, characters_dir, output_directory, config):
-    SheetToPNG().convert(sheet, characters_dir)
+    SheetToPNG().convert(sheet, characters_dir, config)
     PngToSvg().convert(directory=characters_dir)
     SVGtoTTF().convert(characters_dir, output_directory, config)
 
