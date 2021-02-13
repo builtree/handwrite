@@ -5,17 +5,17 @@
     "em": 1000,
     "encoding": "UnicodeFull",
     "lang": "English (US)",
-    "filename": "MyFont",
-    "style": "Regular"
+    "filename": "ExcellentFont2",
+    "style": "Bold"
   },
-  "sfnt_names": { 
-    "Copyright": "Copyright (c) 2021 by Nobody",
-    "Family": "MyFont",
-    "SubFamily": "Regular",
-    "UniqueID": "MyFont 2021-02-04",
-    "Fullname": "MyFont Regular",
+  "sfnt_names": {
+    "Copyright": "Copyright (c) 2021 by Somebody",
+    "Family": "ExcellentFont2",
+    "SubFamily": "Bold",
+    "UniqueID": "ExcellentFont2 2021-02-09",
+    "Fullname": "ExcellentFont2 Bold",
     "Version": "Version 001.000",
-    "PostScriptName": "MyFont-Regular" 
+    "PostScriptName": "ExcellentFont2-Bold"
   },
   "glyphs": [
     65,

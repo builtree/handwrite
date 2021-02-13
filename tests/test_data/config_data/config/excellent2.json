@@ -5,17 +5,17 @@
     "em": 1000,
     "encoding": "UnicodeFull",
     "lang": "English (US)",
-    "filename": "MyFont",
+    "filename": "MyFont3",
     "style": "Regular"
   },
   "sfnt_names": { 
     "Copyright": "Copyright (c) 2021 by Nobody",
-    "Family": "MyFont",
+    "Family": "MyFont3",
     "SubFamily": "Regular",
-    "UniqueID": "MyFont 2021-02-04",
-    "Fullname": "MyFont Regular",
+    "UniqueID": "MyFont3 2021-02-04",
+    "Fullname": "MyFont3 Regular",
     "Version": "Version 001.000",
-    "PostScriptName": "MyFont-Regular" 
+    "PostScriptName": "MyFont3-Regular" 
   },
   "glyphs": [
     65,
