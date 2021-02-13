@@ -1,5 +1,5 @@
 import sys
-import os.path
+import os
 import json
 
 IMPORT_OPTIONS = ("removeoverlap", "correctdir")
@@ -14,17 +14,18 @@ class SVGtoTTF:
             directory = directory + "/"
 
         import subprocess
+        import platform
 
-        subprocess.run(
-            [
-                "fontforge",
-                "--script",
-                os.path.realpath(__file__),
-                config,
-                directory,
-                outfile,
-            ]
+        call = (
+            ["ffpython"] if platform.system() == "Windows" else ["fontforge", "-script"]
         )
+        call += [
+            os.path.abspath(__file__),
+            config,
+            directory,
+            outfile,
+        ]
+        subprocess.run(call)
 
 
 def loadConfig(filename="default"):
@@ -112,6 +113,11 @@ def setKerning(font, table):
 
 
 def main(config_file, directory, outdir):
+    try:
+        font = fontforge.font()
+    except:
+        import fontforge
+
     config = loadConfig(config_file)
     font = fontforge.font()
     unicode_mapping = {}
