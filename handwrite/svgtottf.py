@@ -16,16 +16,19 @@ class SVGtoTTF:
         import subprocess
         import platform
 
-        call = (
-            ["ffpython"] if platform.system() == "Windows" else ["fontforge", "-script"]
+        subprocess.run(
+            (
+                ["ffpython"]
+                if platform.system() == "Windows"
+                else ["fontforge", "-script"]
+            )
+            + [
+                os.path.abspath(__file__),
+                config,
+                directory,
+                outfile,
+            ]
         )
-        call += [
-            os.path.abspath(__file__),
-            config,
-            directory,
-            outfile,
-        ]
-        subprocess.run(call)
 
 
 def loadConfig(filename="default"):
