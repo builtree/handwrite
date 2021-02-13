@@ -1,5 +1,5 @@
 import sys
-import os.path
+import os
 import json
 
 IMPORT_OPTIONS = ("removeoverlap", "correctdir")
@@ -8,12 +8,16 @@ IMPORT_OPTIONS = ("removeoverlap", "correctdir")
 class SVGtoTTF:
     def convert(self, directory, outdir, config):
         import subprocess
+        import platform
 
         subprocess.run(
-            [
-                "fontforge",
-                "--script",
-                os.path.realpath(__file__),
+            (
+                ["ffpython"]
+                if platform.system() == "Windows"
+                else ["fontforge", "-script"]
+            )
+            + [
+                os.path.abspath(__file__),
                 config,
                 directory,
                 outdir,
@@ -121,6 +125,11 @@ def generateFontFile(filename, outdir, config_file, font):
 
 
 def main(config_file, directory, outdir):
+    try:
+        font = fontforge.font()
+    except:
+        import fontforge
+
     config = loadConfig(config_file)
     font = fontforge.font()
     unicode_mapping = {}
