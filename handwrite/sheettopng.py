@@ -1,5 +1,6 @@
 import os
 import itertools
+import json
 
 import cv2
 
@@ -17,7 +18,7 @@ ALL_CHARS = list(
 class SheetToPNG:
     """Converter class to convert input sample sheet to character PNGs."""
 
-    def convert(self, sheet, characters_dir, cols=8, rows=10, threshold_value=200):
+    def convert(self, sheet, characters_dir, config, cols=8, rows=10):
         """Convert a sheet of sample writing input to a custom directory structure of PNGs.
 
         Detect all characters in the sheet as a separate contours and convert each to
@@ -29,18 +30,21 @@ class SheetToPNG:
             Path to the sheet file to be converted.
         characters_dir : str
             Path to directory to save characters in.
-        threshold_value : int, default=200
-            Value to adjust thresholding of the image for better contour detection.
+        config: str
+            Path to config file.
         cols : int, default=8
             Number of columns of expected contours. Defaults to 8 based on the default sample.
         rows : int, default=10
             Number of rows of expected contours. Defaults to 10 based on the default sample.
         """
+        with open(config) as f:
+            threshold_value = json.load(f).get("threshold_value", 200)
         characters = self.detect_characters(
             sheet, threshold_value, cols=cols, rows=rows
         )
         self.save_images(
-            characters, characters_dir,
+            characters,
+            characters_dir,
         )
 
     def detect_characters(self, sheet_image, threshold_value, cols=8, rows=10):
@@ -150,5 +154,6 @@ class SheetToPNG:
             if not os.path.exists(character):
                 os.mkdir(character)
             cv2.imwrite(
-                os.path.join(character, str(ALL_CHARS[k]) + ".png"), images[0],
+                os.path.join(character, str(ALL_CHARS[k]) + ".png"),
+                images[0],
             )

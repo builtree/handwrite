@@ -1,4 +1,5 @@
 {
+  "threshold_value": 200,
   "props": {
     "ascent": 800,
     "descent": 200,
@@ -184,6 +185,8 @@
       "]": [10, 10]
     },
     "kerning_table": {
+      "autokern": true,
+      "seperation": 0,
       "rows": [
         null,
         "f-+=/?",
