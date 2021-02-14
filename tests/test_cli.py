@@ -51,7 +51,11 @@ class TestCLI(unittest.TestCase):
     def test_multiple_inputs(self):
         # Check working with multiple inputs
         subprocess.call(
-            ["handwrite", self.sheets_dir, self.temp_dir,]
+            [
+                "handwrite",
+                self.sheets_dir,
+                self.temp_dir,
+            ]
         )
         self.assertTrue(os.path.exists(os.path.join(self.temp_dir, "MyFont.ttf")))
         self.assertTrue(
@@ -94,7 +98,13 @@ class TestCLI(unittest.TestCase):
 
     def test_multiple_inputs_without_configs_dir(self):
         subprocess.call(
-            ["handwrite", self.sheets_dir, self.temp_dir, "--directory", self.temp_dir,]
+            [
+                "handwrite",
+                self.sheets_dir,
+                self.temp_dir,
+                "--directory",
+                self.temp_dir,
+            ]
         )
         # Check if config directory is created inside given character directory
         configs_dir = os.path.join(self.temp_dir, "configs")
@@ -142,7 +152,11 @@ class TestCLI(unittest.TestCase):
 
     def test_multiple_inputs_with_single_config(self):
         config_file = os.path.join(
-            self.file_dir, "test_data", "config_data", "config", "excellent2.json",
+            self.file_dir,
+            "test_data",
+            "config_data",
+            "config",
+            "excellent2.json",
         )
         subprocess.call(
             [
@@ -162,7 +176,10 @@ class TestCLI(unittest.TestCase):
         # same as the given config file
         for config in os.listdir(configs_dir):
             self.assertTrue(
-                filecmp.cmp(os.path.join(configs_dir, config), config_file,)
+                filecmp.cmp(
+                    os.path.join(configs_dir, config),
+                    config_file,
+                )
             )
         # Font for the first image in sorted list of files inside sheet directory
         # gets created first
@@ -175,7 +192,13 @@ class TestCLI(unittest.TestCase):
         configs_dir = os.path.join(self.file_dir, "test_data", "config_data", "configs")
         # Check working with sheet and config directory but no character directory
         subprocess.call(
-            ["handwrite", self.sheets_dir, self.temp_dir, "--config", configs_dir,]
+            [
+                "handwrite",
+                self.sheets_dir,
+                self.temp_dir,
+                "--config",
+                configs_dir,
+            ]
         )
         self.assertTrue(
             os.path.exists(os.path.join(self.temp_dir, "ExcellentFont.ttf"))
