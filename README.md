@@ -87,11 +87,13 @@ Here's the end result!
    sudo apt-get install potrace
    ```
 
-2. Install fontforge using apt
+2. Install fontforge
 
    ```console
    sudo apt-get install fontforge
    ```
+
+   Since the PPA for fontforge is no longer maintained, apt might not work for some users. The preferred way is install is to use the AppImage from: https://fontforge.org/en-US/downloads/
 
 3. Clone the repository or your fork
 
