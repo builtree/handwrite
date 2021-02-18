@@ -39,3 +39,24 @@ jobs:
       - name: Test
         run: |
           python setup.py test
+        
+  lint:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [windows-latest, ubuntu-latest]
+        python-version: [3.7, 3.8]
+
+    steps:
+      - name: Checkout full upstream repo
+        uses: actions/checkout@v2
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v2
+        with:
+          python-version: ${{ matrix.python-version }}
+      - name: Check formatting with Black
+        uses: psf/black@stable
+
+
+
+
