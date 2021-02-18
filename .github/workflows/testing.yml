@@ -41,10 +41,9 @@ jobs:
           python setup.py test
         
   lint:
-    runs-on: ${{ matrix.os }}
+    runs-on: ubuntu-latest
     strategy:
       matrix:
-        os: [windows-latest, ubuntu-latest]
         python-version: [3.7, 3.8]
 
     steps:
@@ -56,7 +55,5 @@ jobs:
           python-version: ${{ matrix.python-version }}
       - name: Check formatting with Black
         uses: psf/black@stable
-
-
 
 
