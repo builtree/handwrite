@@ -3,6 +3,20 @@ name: Tests
 on: [push, pull_request]
 
 jobs:
+
+  lint:
+      runs-on: ubuntu-latest
+
+      steps:
+        - name: Checkout full upstream repo
+          uses: actions/checkout@v2
+        - name: Set up Python 3.8
+          uses: actions/setup-python@v2
+          with:
+            python-version: 3.8
+        - name: Check formatting with Black
+          uses: psf/black@stable
+
   test:
     runs-on: ${{ matrix.os }}
     strategy:
