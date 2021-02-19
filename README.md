@@ -63,10 +63,21 @@ Your form should look like this:
 
 1. Make sure you have installed `handwrite`, `potrace` & `fontforge`.
 
-2. In a terminal type `handwrite (PATH_TO_IMAGE) (OUTPUT_DIRECTORY)`.
+2. In a terminal type `handwrite [PATH TO IMAGE or DIRECTORY WITH IMAGES] [OUTPUT DIRECTORY]`.
    (You can also type `handwrite -h`, to see all the arguments you can use).
 
-3. Your font will be created as `OUTPUT_DIRECTORY/OUTPUT_FONT_NAME.ttf`. Install the font in your system.
+3. (Optional) Config file containing custom options for your font can also be passed using
+   the `--config [CONFIG FILE]` or `--config [DIRECTORY WITH CONFIG FILES]` argument.
+
+   <blockquote>
+   Note:
+
+   - If passing a directory, make sure to rename the config files to the corresponding sheet names.
+   - If a single config file is passed for multiple inputs, that config will be used for all the inputs.
+   - If no config file is provided for an input then the [default config file](handwrite/default.json) is used.
+   </blockquote>
+
+3. Your font will be created as `OUTPUT DIRECTORY/OUTPUT FONT NAME.ttf`. Install the font in your system.
 
 4. Select your font in your word processor and get to work!
 

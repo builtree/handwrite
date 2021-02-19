@@ -17,7 +17,7 @@ def converters(sheet, characters_dir, output_directory, config):
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument(
-        "sheet", help="Path to sample sheet/directory with multiple sample sheets"
+        "input_path", help="Path to sample sheet/directory with multiple sample sheets"
     )
     parser.add_argument("output_directory", help="Directory Path to save font output")
     parser.add_argument(
@@ -44,11 +44,11 @@ def main():
     if os.path.isdir(args.config):
         configs_dir = args.config
 
-    if os.path.isdir(args.sheet):
+    if os.path.isdir(args.input_path):
         configs_dir = configs_dir or directory + os.sep + "configs"
         os.makedirs(configs_dir, exist_ok=True)
 
-        for sheet_name in sorted(os.listdir(args.sheet)):
+        for sheet_name in sorted(os.listdir(args.input_path)):
             config_file = (
                 configs_dir + os.sep + os.path.splitext(sheet_name)[0] + ".json"
             )
@@ -62,13 +62,13 @@ def main():
             os.makedirs(characters_dir, exist_ok=True)
 
             converters(
-                args.sheet + os.sep + sheet_name,
+                args.input_path + os.sep + sheet_name,
                 characters_dir,
                 args.output_directory,
                 config_file,
             )
     else:
-        converters(args.sheet, directory, args.output_directory, args.config)
+        converters(args.input_path, directory, args.output_directory, args.config)
 
     if not args.directory:
         shutil.rmtree(directory)
