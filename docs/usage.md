@@ -27,18 +27,17 @@ Your form should look like this:
 3. (Optional) Config file containing custom options for your font can also be passed using
    the `--config [CONFIG FILE]` or `--config [DIRECTORY WITH CONFIG FILES]` argument.
 
-   <blockquote>
-   Note:
+    ???+ note
+        - If passing a directory, make sure to rename the config files to the corresponding sheet names.
 
-   - If passing a directory, make sure to rename the config files to the corresponding sheet names.
-   - If a single config file is passed for multiple inputs, that config will be used for all the inputs.
-   - If no config file is provided for an input then the [default config file](handwrite/default.json) is used.
-   </blockquote>
+        - If a single config file is passed for multiple inputs, that config will be used for all the inputs.
 
-3. Your font will be created as `OUTPUT DIRECTORY/OUTPUT FONT NAME.ttf`. Install the font in your system.
+        - If no config file is provided for an input then the [default config file](https://github.com/cod-ed/handwrite/blob/main/handwrite/default.json) is used.
 
-4. Select your font in your word processor and get to work!
 
+4. Your font will be created as `OUTPUT DIRECTORY/OUTPUT FONT NAME.ttf`. Install the font in your system.
+
+5. Select your font in your word processor and get to work!
 Here's the end result!
 
 <p align="center">

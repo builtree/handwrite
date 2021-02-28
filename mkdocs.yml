@@ -25,14 +25,14 @@ theme:
     # - navigation.tabs
     - navigation.sections
   palette:
-    primary: 'indigo'
+    primary: 'black'
     accent: 'white'
   font:
     text: 'Ubuntu'
     code: 'Ubuntu Mono'
   icon:
-    logo: material/atom
-    repo: octicons/mark-github-16
+    logo: fontawesome/solid/pen-square
+    # repo: octicons/mark-github-16
 
 markdown_extensions:
   - admonition
