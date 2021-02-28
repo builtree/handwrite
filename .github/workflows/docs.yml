@@ -1,0 +1,27 @@
+name: Docs
+on:
+  workflow_dispatch:
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Setup Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.8'
+      - name: Install dependencies
+        run: |
+          python3 -m pip install --upgrade pip
+          python3 -m pip install mkdocs
+          python3 -m pip install mkdocs-material
+          python3 -m pip install pymdown-extensions
+      - name: Git setup and update
+        run: |
+          git config user.name "GitHub Action" && git config user.email "github-action@github.com"
+          git fetch origin
+      - name: Build Docs
+        run: mkdocs build
+      - name: Add latest web build and deploy
+        run: |
+          mkdocs gh-deploy
