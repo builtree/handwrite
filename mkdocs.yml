@@ -1,19 +1,15 @@
 site_name: 'Handwrite'
 site_description: 'Official Site for Handwrite'
-# site_author: ''
-# site_url: ''
+site_author: 'Team Handwrite'
+site_url: 'https://cod-ed.github.io/handwrite'
 
 # Repository
 repo_name: 'cod-ed/handwrite'
 repo_url: 'https://github.com/cod-ed/handwrite'
 
-# copyright
-# google_analytics:
-
 nav:
   - Home: 'index.md'
   - Installation: 'installation.md'
-#  - Issues: 'https://github.com/cod-ed/handwrite/issues'
   - Usage: 'usage.md'
   - Contributing: 'contributing.md'
   - Credits: 'credits.md'
@@ -22,7 +18,6 @@ nav:
 theme:
   name: material
   features:
-    # - navigation.tabs
     - navigation.sections
   palette:
     primary: 'black'
@@ -32,7 +27,6 @@ theme:
     code: 'Ubuntu Mono'
   icon:
     logo: fontawesome/solid/pen-square
-    # repo: octicons/mark-github-16
 
 markdown_extensions:
   - admonition
