@@ -1,0 +1,60 @@
+site_name: 'Handwrite'
+site_description: 'Official Site for Handwrite'
+# site_author: ''
+# site_url: ''
+
+# Repository
+repo_name: 'cod-ed/handwrite'
+repo_url: 'https://github.com/cod-ed/handwrite'
+
+# copyright
+# google_analytics:
+
+nav:
+  - Home: 'index.md'
+  - Installation: 'installation.md'
+#  - Issues: 'https://github.com/cod-ed/handwrite/issues'
+  - Usage: 'usage.md'
+  - Contributing: 'contributing.md'
+  - Credits: 'credits.md'
+
+
+theme:
+  name: material
+  features:
+    # - navigation.tabs
+    - navigation.sections
+  palette:
+    primary: 'indigo'
+    accent: 'white'
+  font:
+    text: 'Ubuntu'
+    code: 'Ubuntu Mono'
+  icon:
+    logo: material/atom
+    repo: octicons/mark-github-16
+
+markdown_extensions:
+  - admonition
+  - codehilite:
+      guess_lang: false
+  - toc:
+      permalink: true
+  - pymdownx.arithmatex
+  - pymdownx.betterem:
+      smart_enable: all
+  - pymdownx.caret
+  - pymdownx.critic
+  - pymdownx.details
+  - pymdownx.inlinehilite
+  - pymdownx.magiclink
+  - pymdownx.mark
+  - pymdownx.smartsymbols
+  - pymdownx.superfences
+  - footnotes
+  - pymdownx.tasklist:
+      custom_checkbox: true
+  - pymdownx.tabbed
+  - pymdownx.tilde
+  - attr_list
+

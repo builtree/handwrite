@@ -27,31 +27,3 @@ Handwrite makes typing written assignments efficient, convenient and authentic.
 Handwrite generates a custom font based on your handwriting sample, which can easily be used in text editors and word processors like Microsoft Word & Libre Office Word!
 
 Handwrite is also helpful for those with dysgraphia.
-
-You can get started with Handwrite [here](https://cod-ed.github.io/handwrite/).
-
-## Sample
-
-You just need to fill up a form:
-
-<p align="center">
-        <img src="https://raw.githubusercontent.com/cod-ed/assets/handwrite/handwrite_filled_form.jpg" width=50%>
-        </img>
-</p>
-
-Here's the end result!
-
-<p align="center">
-        <img src="https://raw.githubusercontent.com/cod-ed/assets/handwrite/handwrite_sentence.png">
-        </img>
-</p>
-
-## Credits and Reference
-
-1. [Potrace](http://potrace.sourceforge.net/) algorithm and package has been immensely helpful.
-
-2. [Fontforge](https://fontforge.org/en-US/) for packaging and adjusting font parameters.
-
-3. [Sacha Chua's](https://github.com/sachac) [project](https://github.com/sachac/sachac-hand/) proved to be a great reference for fontforge python.
-
-4. All credit for svgtottf converter goes to this [project](https://github.com/pteromys/svgs2ttf) by [pteromys](https://github.com/pteromys). We made a quite a lot of modifications of our own, but the base script idea was derived from here.
