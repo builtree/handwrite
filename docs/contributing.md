@@ -4,48 +4,50 @@
 
 1. Install Potrace using apt
 
-   ```console
-   sudo apt-get install potrace
-   ```
+    ```console
+    sudo apt-get install potrace
+    ```
 
 2. Install fontforge
 
-   ```console
-   sudo apt-get install fontforge
-   ```
+    ```console
+    sudo apt-get install fontforge
+    ```
 
-   Since the PPA for fontforge is no longer maintained, apt might not work for some users. The preferred way to install is using the AppImage from: https://fontforge.org/en-US/downloads/
+    ???+ warning
+        Since the PPA for fontforge is no longer maintained, apt might not work for some users.
+        The preferred way to install is using the AppImage from: https://fontforge.org/en-US/downloads/
 
 3. Clone the repository or your fork
 
-   ```console
-   git clone https://github.com/cod-ed/handwrite
-   ```
+    ```console
+    git clone https://github.com/cod-ed/handwrite
+    ```
 
 4. (Optional) Make a virtual environment and activate it
 
-   ```console
-   python -m venv .venv
-   source .venv/bin/activate
-   ```
+    ```console
+    python -m venv .venv
+    source .venv/bin/activate
+    ```
 
 5. In the project directory run:
 
-   ```console
-   pip install -e .[dev]
-   ```
+    ```console
+    pip install -e .[dev]
+    ```
 
 6. Make sure the tests run:
 
-   ```console
-   python setup.py test
-   ```
+    ```console
+    python setup.py test
+    ```
 
 7. Install pre-commit hooks before contributing:
 
-   ```console
-   pre-commit install
-   ```
+    ```console
+    pre-commit install
+    ```
 
 You are ready to go!
 
@@ -57,33 +59,33 @@ You are ready to go!
 
 3. Clone the repository or your fork
 
-   ```console
-   git clone https://github.com/cod-ed/handwrite
-   ```
+    ```console
+    git clone https://github.com/cod-ed/handwrite
+    ```
 
 4. (Optional) Make a virtual environment and activate it
 
-   ```console
-   python -m venv .venv
-   .venv\Scripts\activate
-   ```
+    ```console
+    python -m venv .venv
+    .venv\Scripts\activate
+    ```
 
 5. In the project directory run:
 
-   ```console
-   pip install -e .[dev]
-   ```
+    ```console
+    pip install -e .[dev]
+    ```
 
 6. Make sure the tests run:
 
-   ```console
-   python setup.py test
-   ```
+    ```console
+    python setup.py test
+    ```
 
 7. Install pre-commit hooks before contributing:
 
-   ```console
-   pre-commit install
-   ```
+    ```console
+    pre-commit install
+    ```
 
 You are ready to go!
