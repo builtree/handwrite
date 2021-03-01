@@ -6,6 +6,6 @@
 
 3. Install handwrite:
 
-   ```console
-   pip install handwrite
-   ```
+    ```console
+    pip install handwrite
+    ```
