@@ -379,42 +379,46 @@
                 <h1 id="development">Development<a class="headerlink" href="#development" title="Permanent link">&para;</a></h1>
 <h2 id="linux">Linux<a class="headerlink" href="#linux" title="Permanent link">&para;</a></h2>
 <ol>
-<li>Install Potrace using apt</li>
-</ol>
+<li>
+<p>Install Potrace using apt</p>
 <div class="highlight"><pre><span></span><code><span class="go">sudo apt-get install potrace</span>
 </code></pre></div>
-<ol>
-<li>Install fontforge</li>
-</ol>
+</li>
+<li>
+<p>Install fontforge</p>
 <div class="highlight"><pre><span></span><code><span class="go">sudo apt-get install fontforge</span>
 </code></pre></div>
-<p>Since the PPA for fontforge is no longer maintained, apt might not work for some users. The preferred way to install is using the AppImage from: <a href="https://fontforge.org/en-US/downloads/">https://fontforge.org/en-US/downloads/</a></p>
-<ol>
-<li>Clone the repository or your fork</li>
-</ol>
+<details class="warning" open="open"><summary>Warning</summary><p>Since the PPA for fontforge is no longer maintained, apt might not work for some users.
+The preferred way to install is using the AppImage from: <a href="https://fontforge.org/en-US/downloads/">https://fontforge.org/en-US/downloads/</a></p>
+</details>
+</li>
+<li>
+<p>Clone the repository or your fork</p>
 <div class="highlight"><pre><span></span><code><span class="go">git clone https://github.com/cod-ed/handwrite</span>
 </code></pre></div>
-<ol>
-<li>(Optional) Make a virtual environment and activate it</li>
-</ol>
+</li>
+<li>
+<p>(Optional) Make a virtual environment and activate it</p>
 <div class="highlight"><pre><span></span><code><span class="go">python -m venv .venv</span>
 <span class="go">source .venv/bin/activate</span>
 </code></pre></div>
-<ol>
-<li>In the project directory run:</li>
-</ol>
+</li>
+<li>
+<p>In the project directory run:</p>
 <div class="highlight"><pre><span></span><code><span class="go">pip install -e .[dev]</span>
 </code></pre></div>
-<ol>
-<li>Make sure the tests run:</li>
-</ol>
+</li>
+<li>
+<p>Make sure the tests run:</p>
 <div class="highlight"><pre><span></span><code><span class="go">python setup.py test</span>
 </code></pre></div>
-<ol>
-<li>Install pre-commit hooks before contributing:</li>
-</ol>
+</li>
+<li>
+<p>Install pre-commit hooks before contributing:</p>
 <div class="highlight"><pre><span></span><code><span class="go">pre-commit install</span>
 </code></pre></div>
+</li>
+</ol>
 <p>You are ready to go!</p>
 <h2 id="windows">Windows<a class="headerlink" href="#windows" title="Permanent link">&para;</a></h2>
 <ol>
@@ -426,31 +430,31 @@
 </li>
 <li>
 <p>Clone the repository or your fork</p>
-</li>
-</ol>
 <div class="highlight"><pre><span></span><code><span class="go">git clone https://github.com/cod-ed/handwrite</span>
 </code></pre></div>
-<ol>
-<li>(Optional) Make a virtual environment and activate it</li>
-</ol>
+</li>
+<li>
+<p>(Optional) Make a virtual environment and activate it</p>
 <div class="highlight"><pre><span></span><code><span class="go">python -m venv .venv</span>
 <span class="go">.venv\Scripts\activate</span>
 </code></pre></div>
-<ol>
-<li>In the project directory run:</li>
-</ol>
+</li>
+<li>
+<p>In the project directory run:</p>
 <div class="highlight"><pre><span></span><code><span class="go">pip install -e .[dev]</span>
 </code></pre></div>
-<ol>
-<li>Make sure the tests run:</li>
-</ol>
+</li>
+<li>
+<p>Make sure the tests run:</p>
 <div class="highlight"><pre><span></span><code><span class="go">python setup.py test</span>
 </code></pre></div>
-<ol>
-<li>Install pre-commit hooks before contributing:</li>
-</ol>
+</li>
+<li>
+<p>Install pre-commit hooks before contributing:</p>
 <div class="highlight"><pre><span></span><code><span class="go">pre-commit install</span>
 </code></pre></div>
+</li>
+</ol>
 <p>You are ready to go!</p>
                 
               
