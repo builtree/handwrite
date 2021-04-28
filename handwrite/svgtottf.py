@@ -37,13 +37,7 @@ class SVGtoTTF:
         )
 
     def set_properties(self):
-        """Set metadata of the font from config.
-
-        Parameters
-        ----------
-        bearings : dict
-            Map from character: [left bearing, right bearing]
-        """
+        """Set metadata of the font from config."""
         props = self.config["props"]
         lang = props.get("lang", "English (US)")
         family = props.get("filename", "Example")
