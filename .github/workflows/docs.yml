@@ -16,6 +16,7 @@ jobs:
           python3 -m pip install mkdocs-material
           python3 -m pip install pymdown-extensions
           python3 -m pip install mkdocstrings pytkdocs[numpy-style]
+          python3 -m pip install -e .
       - name: Git setup and update
         run: |
           git config user.name "GitHub Action" && git config user.email "github-action@github.com"
