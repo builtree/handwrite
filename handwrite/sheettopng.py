@@ -57,7 +57,7 @@ class SheetToPNG:
 
         Parameters
         ----------
-        sheet : str
+        sheet_image : str
             Path to the sheet file to be converted.
         threshold_value : int
             Value to adjust thresholding of the image for better contour detection.
