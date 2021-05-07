@@ -14,7 +14,17 @@ setuptools.setup(
     url="https://github.com/cod-ed/handwrite",
     packages=setuptools.find_packages(),
     install_requires=["opencv-python", "Pillow"],
-    extras_require={"dev": ["pre-commit", "black"]},
+    extras_require={
+        "dev": [
+            "pre-commit",
+            "black",
+            "mkdocs",
+            "mkdocs-material",
+            "pymdown-extensions",
+            "mkdocstrings",
+            "pytkdocs[numpy-style]",
+        ]
+    },
     entry_points={
         "console_scripts": ["handwrite = handwrite.cli:main"],
     },
