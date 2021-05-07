@@ -4,7 +4,15 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - name: Checkout main
+        uses: actions/checkout@v2
+        with:
+          ref: main
+      - name: Checkout dev
+        uses: actions/checkout@v2
+        with:
+          ref: dev
+          path: devbranch
       - name: Setup Python
         uses: actions/setup-python@v2
         with:
@@ -17,8 +25,15 @@ jobs:
         run: |
           git config user.name "GitHub Action" && git config user.email "github-action@github.com"
           git fetch origin
-      - name: Build Docs
+      - name: Build Docs for main
         run: mkdocs build
+      - name: Build Docs for dev
+        run: |
+          cd devbranch
+          mkdocs build
+          mv site dev
+          cd ..
+          mv devbranch/dev site/
       - name: Add latest web build and deploy
         run: |
-          mkdocs gh-deploy
+          mkdocs gh-deploy --dirty
