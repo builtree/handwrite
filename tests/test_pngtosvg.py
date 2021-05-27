@@ -1,16 +1,16 @@
 import os
 import unittest
 
-from handwrite.pngtosvg import PngToSvg
+from handwrite.pngtosvg import PNGtoSVG
 
 
-class TestPngToSvg(unittest.TestCase):
+class TestPNGtoSVG(unittest.TestCase):
     def setUp(self):
         self.directory = os.path.join(
             os.path.dirname(os.path.abspath(__file__)),
             "test_data" + os.sep + "pngtosvg",
         )
-        self.converter = PngToSvg()
+        self.converter = PNGtoSVG()
 
     def test_bmpToSvg(self):
         self.converter.bmpToSvg(self.directory + os.sep + "45.bmp")

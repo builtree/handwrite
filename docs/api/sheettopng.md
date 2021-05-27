@@ -1,3 +1,3 @@
-::: handwrite.sheettopng.SheetToPNG
+::: handwrite.sheettopng.SHEETtoPNG
     selection:
         docstring_style: numpy

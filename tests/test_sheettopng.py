@@ -3,17 +3,17 @@ import shutil
 import tempfile
 import unittest
 
-from handwrite.sheettopng import SheetToPNG, ALL_CHARS
+from handwrite.sheettopng import SHEETtoPNG, ALL_CHARS
 
 
-class TestSheetToPNG(unittest.TestCase):
+class TestSHEETtoPNG(unittest.TestCase):
     def setUp(self):
         self.directory = tempfile.mkdtemp()
         self.sheets_path = os.path.join(
             os.path.dirname(os.path.abspath(__file__)),
             "test_data" + os.sep + "sheettopng",
         )
-        self.converter = SheetToPNG()
+        self.converter = SHEETtoPNG()
 
     def tearDown(self):
         shutil.rmtree(self.directory)
