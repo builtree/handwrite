@@ -15,7 +15,7 @@ ALL_CHARS = list(
 )
 
 
-class SheetToPNG:
+class SHEETtoPNG:
     """Converter class to convert input sample sheet to character PNGs."""
 
     def convert(self, sheet, characters_dir, config, cols=8, rows=10):

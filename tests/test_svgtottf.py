@@ -3,7 +3,7 @@ import shutil
 import tempfile
 import unittest
 
-from handwrite import SheetToPNG, SVGtoTTF, PngToSvg
+from handwrite import SHEETtoPNG, SVGtoTTF, PNGtoSVG
 
 
 class TestSVGtoTTF(unittest.TestCase):
@@ -22,8 +22,8 @@ class TestSVGtoTTF(unittest.TestCase):
             "config_data",
             "default.json",
         )
-        SheetToPNG().convert(self.sheet_path, self.characters_dir, self.config)
-        PngToSvg().convert(directory=self.characters_dir)
+        SHEETtoPNG().convert(self.sheet_path, self.characters_dir, self.config)
+        PNGtoSVG().convert(directory=self.characters_dir)
         self.converter = SVGtoTTF()
 
     def tearDown(self):

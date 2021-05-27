@@ -1,3 +1,3 @@
-::: handwrite.pngtosvg.PngToSvg
+::: handwrite.pngtosvg.PNGtoSVG
     selection:
         docstring_style: numpy

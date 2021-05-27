@@ -3,14 +3,14 @@ import shutil
 import argparse
 import tempfile
 
-from handwrite import SheetToPNG
-from handwrite import PngToSvg
+from handwrite import SHEETtoPNG
+from handwrite import PNGtoSVG
 from handwrite import SVGtoTTF
 
 
 def run(sheet, output_directory, characters_dir, config):
-    SheetToPNG().convert(sheet, characters_dir, config)
-    PngToSvg().convert(directory=characters_dir)
+    SHEETtoPNG().convert(sheet, characters_dir, config)
+    PNGtoSVG().convert(directory=characters_dir)
     SVGtoTTF().convert(characters_dir, output_directory, config)
 
 
