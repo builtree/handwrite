@@ -15,7 +15,7 @@ nav:
   - Credits: 'credits.md'
   - Documentation:
     - Converters: 
-      - SheettoPNG: 'api/sheettopng.md'
+      - SHEETtoPNG: 'api/sheettopng.md'
       - PNGtoSVG: 'api/pngtosvg.md'
       - SVGtoTTF: 'api/svgtottf.md'
 
