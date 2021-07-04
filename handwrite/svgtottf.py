@@ -28,12 +28,7 @@ class SVGtoTTF:
                 if platform.system() == "Windows"
                 else ["fontforge", "-script"]
             )
-            + [
-                os.path.abspath(__file__),
-                config,
-                directory,
-                outdir,
-            ]
+            + [os.path.abspath(__file__), config, directory, outdir]
         )
 
     def set_properties(self):
@@ -93,9 +88,9 @@ class SVGtoTTF:
         default = bearings.get("Default", [60, 60])
 
         for k, v in bearings.items():
-            if v[0] == None:
+            if v[0] is None:
                 v[0] = default[0]
-            if v[1] == None:
+            if v[1] is None:
                 v[1] = default[1]
 
             if k != "Default":
@@ -131,7 +126,7 @@ class SVGtoTTF:
                 if type(y) is list
                 else [y]
             )
-            offsets = [0 if x == None else x for x in flatten_list(kerning_table)]
+            offsets = [0 if x is None else x for x in flatten_list(kerning_table)]
             self.font.addKerningClass("kern", "kern-1", rows, cols, offsets)
 
     def generate_font_file(self, filename, outdir, config_file):
