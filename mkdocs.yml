@@ -7,7 +7,7 @@ site_url: 'https://cod-ed.github.io/handwrite'
 repo_name: 'cod-ed/handwrite'
 repo_url: 'https://github.com/cod-ed/handwrite'
 
-nav: 
+nav:
   - Home: 'index.md'
   - Installation: 'installation.md'
   - Usage: 'usage.md'
@@ -18,8 +18,6 @@ nav:
       - SHEETtoPNG: 'api/sheettopng.md'
       - PNGtoSVG: 'api/pngtosvg.md'
       - SVGtoTTF: 'api/svgtottf.md'
-
-
 
 theme:
   name: material
