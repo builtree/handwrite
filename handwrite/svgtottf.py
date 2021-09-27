@@ -4,7 +4,7 @@ import json
 
 
 class SVGtoTTF:
-    def convert(self, directory, outdir, config):
+    def convert(self, directory, outdir, config, metadata=None):
         """Convert a directory with SVG images to TrueType Font.
 
         Calls a subprocess to the run this script with Fontforge Python
@@ -28,15 +28,21 @@ class SVGtoTTF:
                 if platform.system() == "Windows"
                 else ["fontforge", "-script"]
             )
-            + [os.path.abspath(__file__), config, directory, outdir]
+            + [
+                os.path.abspath(__file__),
+                config,
+                directory,
+                outdir,
+                json.dumps(metadata),
+            ]
         )
 
     def set_properties(self):
         """Set metadata of the font from config."""
         props = self.config["props"]
         lang = props.get("lang", "English (US)")
-        family = props.get("filename", "Example")
-        style = props.get("style", "Regular")
+        family = self.metadata.get("filename", None) or props.get("filename", "Example")
+        style = self.metadata.get("style", None) or props.get("style", "Regular")
 
         self.font.familyname = family
         self.font.fontname = family + "-" + style
@@ -48,6 +54,9 @@ class SVGtoTTF:
                 if isinstance(v, list):
                     v = tuple(v)
                 setattr(self.font, k, v)
+
+        if self.config.get("sfnt_names", None) and self.metadata.get("family", None):
+            self.config["sfnt_names"]["Family"] = self.metadata["family"]
 
         for k, v in self.config.get("sfnt_names", {}).items():
             self.font.appendSFNTName(str(lang), str(k), str(v))
@@ -166,7 +175,7 @@ class SVGtoTTF:
         sys.stderr.write("\nGenerating %s...\n" % outfile)
         self.font.generate(outfile)
 
-    def convert_main(self, config_file, directory, outdir):
+    def convert_main(self, config_file, directory, outdir, metadata):
         try:
             self.font = fontforge.font()
         except:
@@ -174,6 +183,7 @@ class SVGtoTTF:
 
         with open(config_file) as f:
             self.config = json.load(f)
+        self.metadata = json.loads(metadata) or {}
 
         self.font = fontforge.font()
         self.unicode_mapping = {}
@@ -187,12 +197,13 @@ class SVGtoTTF:
         self.set_kerning(self.config["typography_parameters"].get("kerning_table", {}))
 
         # Generate font and save as a .ttf file
-        self.generate_font_file(
-            str(self.config["props"].get("filename", None)), outdir, config_file
+        filename = self.metadata.get("filename", None) or self.config["props"].get(
+            "filename", None
         )
+        self.generate_font_file(str(filename), outdir, config_file)
 
 
 if __name__ == "__main__":
-    if len(sys.argv) != 4:
+    if len(sys.argv) != 5:
         raise ValueError("Incorrect call to SVGtoTTF")
-    SVGtoTTF().convert_main(sys.argv[1], sys.argv[2], sys.argv[3])
+    SVGtoTTF().convert_main(sys.argv[1], sys.argv[2], sys.argv[3], sys.argv[4])

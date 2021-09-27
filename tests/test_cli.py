@@ -39,6 +39,8 @@ class TestCLI(unittest.TestCase):
                 self.temp_dir,
                 "--config",
                 os.path.join(self.file_dir, "test_data", "config_data", "default.json"),
+                "--filename",
+                "CustomFont"
             ]
         )
         for i in ALL_CHARS:
@@ -46,7 +48,7 @@ class TestCLI(unittest.TestCase):
                 self.assertTrue(
                     os.path.exists(os.path.join(self.temp_dir, f"{i}", f"{i}{suffix}"))
                 )
-        self.assertTrue(os.path.exists(os.path.join(self.temp_dir, "MyFont.ttf")))
+        self.assertTrue(os.path.exists(os.path.join(self.temp_dir, "CustomFont.ttf")))
 
     def test_multiple_inputs(self):
         # Check working with multiple inputs

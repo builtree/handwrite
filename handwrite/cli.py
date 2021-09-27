@@ -8,13 +8,13 @@ from handwrite import PNGtoSVG
 from handwrite import SVGtoTTF
 
 
-def run(sheet, output_directory, characters_dir, config):
+def run(sheet, output_directory, characters_dir, config, metadata):
     SHEETtoPNG().convert(sheet, characters_dir, config)
     PNGtoSVG().convert(directory=characters_dir)
-    SVGtoTTF().convert(characters_dir, output_directory, config)
+    SVGtoTTF().convert(characters_dir, output_directory, config, metadata)
 
 
-def converters(sheet, output_directory, directory=None, config=None):
+def converters(sheet, output_directory, directory=None, config=None, metadata=None):
     if not directory:
         directory = tempfile.mkdtemp()
         isTempdir = True
@@ -52,9 +52,10 @@ def converters(sheet, output_directory, directory=None, config=None):
                 output_directory,
                 characters_dir,
                 config_file,
+                metadata,
             )
     else:
-        run(sheet, output_directory, directory, config)
+        run(sheet, output_directory, directory, config, metadata)
 
     if isTempdir:
         shutil.rmtree(directory)
@@ -74,6 +75,12 @@ def main():
     parser.add_argument(
         "--config", help="Use custom configuration file/directory", default=None
     )
+    parser.add_argument("--filename", help="Font File name", default=None)
+    parser.add_argument("--family", help="Font Family name", default=None)
+    parser.add_argument("--style", help="Font Style name", default=None)
 
     args = parser.parse_args()
-    converters(args.input_path, args.output_directory, args.directory, args.config)
+    metadata = {"filename": args.filename, "family": args.family, "style": args.style}
+    converters(
+        args.input_path, args.output_directory, args.directory, args.config, metadata
+    )
