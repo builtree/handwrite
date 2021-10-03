@@ -40,7 +40,7 @@ class TestCLI(unittest.TestCase):
                 "--config",
                 os.path.join(self.file_dir, "test_data", "config_data", "default.json"),
                 "--filename",
-                "CustomFont"
+                "CustomFont",
             ]
         )
         for i in ALL_CHARS:

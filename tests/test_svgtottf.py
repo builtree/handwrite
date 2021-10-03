@@ -31,7 +31,9 @@ class TestSVGtoTTF(unittest.TestCase):
         shutil.rmtree(self.temp)
 
     def test_convert(self):
-        self.converter.convert(self.characters_dir, self.temp, self.config, self.metadata)
+        self.converter.convert(
+            self.characters_dir, self.temp, self.config, self.metadata
+        )
         self.assertTrue(os.path.exists(os.path.join(self.temp, "CustomFont.ttf")))
         # os.remove(os.join())
 
