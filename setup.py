@@ -18,10 +18,10 @@ setuptools.setup(
         "dev": [
             "pre-commit",
             "black",
-            "mkdocs",
-            "mkdocs-material",
-            "pymdown-extensions",
-            "mkdocstrings",
+            "mkdocs==1.2.2",
+            "mkdocs-material==6.1.0",
+            "pymdown-extensions==8.2",
+            "mkdocstrings>=0.16.1",
             "pytkdocs[numpy-style]",
         ]
     },
