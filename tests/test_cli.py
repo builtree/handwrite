@@ -62,3 +62,18 @@ class TestCLI(unittest.TestCase):
             )
         except subprocess.CalledProcessError as e:
             self.assertNotEqual(e.returncode, 0)
+
+    def test_multiple_config(self):
+        # Check working with multiple config files
+        try:
+            subprocess.check_call(
+                [
+                    "handwrite",
+                    self.sheets_dir,
+                    self.temp_dir,
+                    "--config",
+                    os.path.join(self.file_dir, "test_data", "config_data"),
+                ]
+            )
+        except subprocess.CalledProcessError as e:
+            self.assertNotEqual(e.returncode, 0)
