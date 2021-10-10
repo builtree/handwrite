@@ -21,39 +21,15 @@ def converters(sheet, output_directory, directory=None, config=None, metadata=No
     else:
         isTempdir = False
 
-    default_config = os.path.join(
-        os.path.dirname(os.path.realpath(__file__)), "default.json"
-    )
     if config is None:
-        config = default_config
-
-    configs_dir = None
+        config = os.path.join(
+            os.path.dirname(os.path.realpath(__file__)), "default.json"
+        )
     if os.path.isdir(config):
-        configs_dir = config
+        raise IsADirectoryError("Config parameter should not be a directory.")
 
     if os.path.isdir(sheet):
-        configs_dir = configs_dir or directory + os.sep + "configs"
-        os.makedirs(configs_dir, exist_ok=True)
-
-        for sheet_name in sorted(os.listdir(sheet)):
-            config_file = (
-                configs_dir + os.sep + os.path.splitext(sheet_name)[0] + ".json"
-            )
-            if not os.path.exists(config_file):
-                if os.path.isdir(config):
-                    shutil.copyfile(default_config, config_file)
-                else:
-                    shutil.copyfile(config, config_file)
-
-            characters_dir = directory + os.sep + os.path.splitext(sheet_name)[0]
-            os.makedirs(characters_dir, exist_ok=True)
-            run(
-                sheet + os.sep + sheet_name,
-                output_directory,
-                characters_dir,
-                config_file,
-                metadata,
-            )
+        raise IsADirectoryError("Sheet parameter should not be a directory.")
     else:
         run(sheet, output_directory, directory, config, metadata)
 
@@ -63,18 +39,14 @@ def converters(sheet, output_directory, directory=None, config=None, metadata=No
 
 def main():
     parser = argparse.ArgumentParser()
-    parser.add_argument(
-        "input_path", help="Path to sample sheet/directory with multiple sample sheets"
-    )
+    parser.add_argument("input_path", help="Path to sample sheet")
     parser.add_argument("output_directory", help="Directory Path to save font output")
     parser.add_argument(
         "--directory",
         help="Generate additional files to this path (Temp by default)",
         default=None,
     )
-    parser.add_argument(
-        "--config", help="Use custom configuration file/directory", default=None
-    )
+    parser.add_argument("--config", help="Use custom configuration file", default=None)
     parser.add_argument("--filename", help="Font File name", default=None)
     parser.add_argument("--family", help="Font Family name", default=None)
     parser.add_argument("--style", help="Font Style name", default=None)
