@@ -44,8 +44,6 @@ class TestSVGtoTTF(unittest.TestCase):
         fake_ttf.close()  # Doesn't keep open
         os.rename(fake_ttf.name, os.path.join(self.temp, "MyFont.ttf"))
         self.converter.convert(self.characters_dir, self.temp, self.config)
-        self.assertTrue(os.path.exists(os.path.join(self.temp, "MyFont-default.ttf")))
+        self.assertTrue(os.path.exists(os.path.join(self.temp, "MyFont (1).ttf")))
         self.converter.convert(self.characters_dir, self.temp, self.config)
-        self.assertTrue(
-            os.path.exists(os.path.join(self.temp, "MyFont-default (1).ttf"))
-        )
+        self.assertTrue(os.path.exists(os.path.join(self.temp, "MyFont (1) (1).ttf")))
