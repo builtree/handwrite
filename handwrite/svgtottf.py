@@ -1,7 +1,7 @@
 import sys
 import os
 import json
-from datetime import date
+import uuid
 
 
 class SVGtoTTF:
@@ -64,9 +64,8 @@ class SVGtoTTF:
             self.config["sfnt_names"]["Fullname"] = family + " " + style
             self.config["sfnt_names"]["PostScriptName"] = family + "-" + style
             self.config["sfnt_names"]["SubFamily"] = style
-            self.config["sfnt_names"]["UniqueID"] = (
-                family + " " + date.today().strftime("%Y-%m-%d")
-            )
+
+        self.config["sfnt_names"]["UniqueID"] = family + " " + str(uuid.uuid4())
 
         for k, v in self.config.get("sfnt_names", {}).items():
             self.font.appendSFNTName(str(lang), str(k), str(v))
