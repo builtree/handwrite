@@ -1,6 +1,7 @@
 import sys
 import os
 import json
+from datetime import date
 
 
 class SVGtoTTF:
@@ -41,12 +42,15 @@ class SVGtoTTF:
         """Set metadata of the font from config."""
         props = self.config["props"]
         lang = props.get("lang", "English (US)")
-        family = self.metadata.get("filename", None) or props.get("filename", "Example")
+        fontname = self.metadata.get("filename", None) or props.get(
+            "filename", "Example"
+        )
+        family = self.metadata.get("family", None) or fontname
         style = self.metadata.get("style", None) or props.get("style", "Regular")
 
-        self.font.familyname = family
-        self.font.fontname = family + "-" + style
-        self.font.fullname = family + " " + style
+        self.font.familyname = fontname
+        self.font.fontname = fontname + "-" + style
+        self.font.fullname = fontname + " " + style
         self.font.encoding = props.get("encoding", "UnicodeFull")
 
         for k, v in props.items():
@@ -55,8 +59,14 @@ class SVGtoTTF:
                     v = tuple(v)
                 setattr(self.font, k, v)
 
-        if self.config.get("sfnt_names", None) and self.metadata.get("family", None):
-            self.config["sfnt_names"]["Family"] = self.metadata["family"]
+        if self.config.get("sfnt_names", None):
+            self.config["sfnt_names"]["Family"] = family
+            self.config["sfnt_names"]["Fullname"] = family + " " + style
+            self.config["sfnt_names"]["PostScriptName"] = family + "-" + style
+            self.config["sfnt_names"]["SubFamily"] = style
+            self.config["sfnt_names"]["UniqueID"] = (
+                family + " " + date.today().strftime("%Y-%m-%d")
+            )
 
         for k, v in self.config.get("sfnt_names", {}).items():
             self.font.appendSFNTName(str(lang), str(k), str(v))
@@ -160,14 +170,6 @@ class SVGtoTTF:
             + os.sep
             + (filename + ".ttf" if not filename.endswith(".ttf") else filename)
         )
-
-        if os.path.exists(outfile):
-            outfile = str(
-                os.path.splitext(outfile)[0]
-                + "-"
-                + os.path.splitext(os.path.basename(config_file))[0]
-                + ".ttf"
-            )
 
         while os.path.exists(outfile):
             outfile = os.path.splitext(outfile)[0] + " (1).ttf"
