@@ -1,6 +1,6 @@
 <p align="center">
     <a href="https://github.com/cod-ed/simulate">
-        <img src="https://raw.githubusercontent.com/cod-ed/assets/handwrite/logo.svg" width=40%>
+        <img src="https://raw.githubusercontent.com/cod-ed/assets/handwrite/logo_white_background.svg" width=40%>
         </img>
     </a>
 </p>
