@@ -39,6 +39,8 @@ class SHEETtoPNG:
         """
         with open(config) as f:
             threshold_value = json.load(f).get("threshold_value", 200)
+        if os.path.isdir(sheet):
+            raise IsADirectoryError("Sheet parameter should not be a directory.")
         characters = self.detect_characters(
             sheet, threshold_value, cols=cols, rows=rows
         )

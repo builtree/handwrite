@@ -25,13 +25,16 @@ class TestSVGtoTTF(unittest.TestCase):
         SHEETtoPNG().convert(self.sheet_path, self.characters_dir, self.config)
         PNGtoSVG().convert(directory=self.characters_dir)
         self.converter = SVGtoTTF()
+        self.metadata = {"filename": "CustomFont"}
 
     def tearDown(self):
         shutil.rmtree(self.temp)
 
     def test_convert(self):
-        self.converter.convert(self.characters_dir, self.temp, self.config)
-        self.assertTrue(os.path.exists(os.path.join(self.temp, "MyFont.ttf")))
+        self.converter.convert(
+            self.characters_dir, self.temp, self.config, self.metadata
+        )
+        self.assertTrue(os.path.exists(os.path.join(self.temp, "CustomFont.ttf")))
         # os.remove(os.join())
 
     def test_convert_duplicate(self):
@@ -41,8 +44,6 @@ class TestSVGtoTTF(unittest.TestCase):
         fake_ttf.close()  # Doesn't keep open
         os.rename(fake_ttf.name, os.path.join(self.temp, "MyFont.ttf"))
         self.converter.convert(self.characters_dir, self.temp, self.config)
-        self.assertTrue(os.path.exists(os.path.join(self.temp, "MyFont-default.ttf")))
+        self.assertTrue(os.path.exists(os.path.join(self.temp, "MyFont (1).ttf")))
         self.converter.convert(self.characters_dir, self.temp, self.config)
-        self.assertTrue(
-            os.path.exists(os.path.join(self.temp, "MyFont-default (1).ttf"))
-        )
+        self.assertTrue(os.path.exists(os.path.join(self.temp, "MyFont (1) (1).ttf")))
