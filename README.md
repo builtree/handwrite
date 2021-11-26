@@ -1,5 +1,5 @@
 <p align="center">
-    <a href="https://github.com/cod-ed/simulate">
+    <a href="https://github.com/cod-ed/handwrite">
         <img src="https://raw.githubusercontent.com/cod-ed/assets/handwrite/logo_white_background.svg" width=40%>
         </img>
     </a>
