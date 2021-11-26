@@ -19,6 +19,8 @@ class SVGtoTTF:
             Path to output directory.
         config : str
             Path to config file.
+        metadata : dict
+            Dictionary containing the metadata (filename, family or style)
         """
         import subprocess
         import platform

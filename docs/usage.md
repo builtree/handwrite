@@ -21,16 +21,14 @@ Your form should look like this:
 
 1. Make sure you have installed `handwrite`, `potrace` & `fontforge`.
 
-2. In a terminal type `handwrite [PATH TO IMAGE or DIRECTORY WITH IMAGES] [OUTPUT DIRECTORY]`.
+2. In a terminal type `handwrite [PATH TO IMAGE] [OUTPUT DIRECTORY]`.
    (You can also type `handwrite -h`, to see all the arguments you can use).
 
 3. (Optional) Config file containing custom options for your font can also be passed using
-   the `--config [CONFIG FILE]` or `--config [DIRECTORY WITH CONFIG FILES]` argument.
+   the `--config [CONFIG FILE]` argument.
 
     ???+ note
-        - If passing a directory, make sure to rename the config files to the corresponding sheet names.
-
-        - If a single config file is passed for multiple inputs, that config will be used for all the inputs.
+        - If you expicitly pass the metadata (filename, family or style) as CLI arguments, they are given a preference over the default config file data.
 
         - If no config file is provided for an input then the [default config file](https://github.com/cod-ed/handwrite/blob/main/handwrite/default.json) is used.
 
