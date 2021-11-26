@@ -16,7 +16,7 @@
         <link rel="canonical" href="https://cod-ed.github.io/handwrite/api/svgtottf/">
       
       <link rel="icon" href="../../assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.2.1, mkdocs-material-7.1.9">
+      <meta name="generator" content="mkdocs-1.2.3, mkdocs-material-7.3.6">
     
     
       
@@ -24,10 +24,10 @@
       
     
     
-      <link rel="stylesheet" href="../../assets/stylesheets/main.ca7ac06f.min.css">
+      <link rel="stylesheet" href="../../assets/stylesheets/main.a57b2b03.min.css">
       
         
-        <link rel="stylesheet" href="../../assets/stylesheets/palette.f1a3b89f.min.css">
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.3f5d1f46.min.css">
         
           
           
@@ -82,7 +82,9 @@
       
     </div>
     
-      <header class="md-header" data-md-component="header">
+      
+
+<header class="md-header" data-md-component="header">
   <nav class="md-header__inner md-grid" aria-label="Header">
     <a href="../.." title="Handwrite" class="md-header__button md-logo" aria-label="Handwrite" data-md-component="logo">
       
@@ -127,11 +129,14 @@
       </div>
     
   </nav>
+  
 </header>
     
     <div class="md-container" data-md-component="container">
       
       
+        
+          
         
       
       <main class="md-main" data-md-component="main">
@@ -263,10 +268,14 @@
       
         <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_6" type="checkbox" id="__nav_6" checked>
       
-      <label class="md-nav__link" for="__nav_6">
-        Documentation
-        <span class="md-nav__icon md-icon"></span>
-      </label>
+      
+      
+      
+        <label class="md-nav__link" for="__nav_6">
+          Documentation
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
       <nav class="md-nav" aria-label="Documentation" data-md-level="1">
         <label class="md-nav__title" for="__nav_6">
           <span class="md-nav__icon md-icon"></span>
@@ -275,6 +284,7 @@
         <ul class="md-nav__list" data-md-scrollfix>
           
             
+              
   
   
     
@@ -286,10 +296,14 @@
       
         <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_6_1" type="checkbox" id="__nav_6_1" checked>
       
-      <label class="md-nav__link" for="__nav_6_1">
-        Converters
-        <span class="md-nav__icon md-icon"></span>
-      </label>
+      
+      
+      
+        <label class="md-nav__link" for="__nav_6_1">
+          Converters
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
       <nav class="md-nav" aria-label="Converters" data-md-level="2">
         <label class="md-nav__title" for="__nav_6_1">
           <span class="md-nav__icon md-icon"></span>
@@ -298,6 +312,7 @@
         <ul class="md-nav__list" data-md-scrollfix>
           
             
+              
   
   
   
@@ -308,8 +323,10 @@
     </li>
   
 
+            
           
             
+              
   
   
   
@@ -320,8 +337,10 @@
     </li>
   
 
+            
           
             
+              
   
   
     
@@ -343,6 +362,8 @@
       </a>
       
         
+
+
 <nav class="md-nav md-nav--secondary" aria-label="Table of contents">
   
   
@@ -410,12 +431,14 @@
     </li>
   
 
+            
           
         </ul>
       </nav>
     </li>
   
 
+            
           
         </ul>
       </nav>
@@ -435,6 +458,8 @@
                 <div class="md-sidebar__scrollwrap">
                   <div class="md-sidebar__inner">
                     
+
+
 <nav class="md-nav md-nav--secondary" aria-label="Table of contents">
   
   
@@ -608,7 +633,7 @@ parameters and export TTF file to outdir.</p>
 
 
 <h2 id="handwrite.svgtottf.SVGtoTTF.convert" class="doc doc-heading">
-<code class="codehilite language-python"><span class="n">convert</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">directory</span><span class="p">,</span> <span class="n">outdir</span><span class="p">,</span> <span class="n">config</span><span class="p">)</span></code>
+<code class="codehilite language-python"><span class="n">convert</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">directory</span><span class="p">,</span> <span class="n">outdir</span><span class="p">,</span> <span class="n">config</span><span class="p">,</span> <span class="n">metadata</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span></code>
 
 
 <a href="#handwrite.svgtottf.SVGtoTTF.convert" class="headerlink" title="Permanent link">&para;</a></h2>
@@ -648,11 +673,17 @@ environment.</p>
         <td><p>Path to config file.</p></td>
         <td><em>required</em></td>
       </tr>
+      <tr>
+        <td><code>metadata</code></td>
+        <td><code>dict</code></td>
+        <td><p>Dictionary containing the metadata (filename, family or style)</p></td>
+        <td><code>None</code></td>
+      </tr>
   </tbody>
 </table>
         <details class="quote">
           <summary>Source code in <code>handwrite/svgtottf.py</code></summary>
-          <div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">convert</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">directory</span><span class="p">,</span> <span class="n">outdir</span><span class="p">,</span> <span class="n">config</span><span class="p">):</span>
+          <div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">convert</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">directory</span><span class="p">,</span> <span class="n">outdir</span><span class="p">,</span> <span class="n">config</span><span class="p">,</span> <span class="n">metadata</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Convert a directory with SVG images to TrueType Font.</span>
 
 <span class="sd">    Calls a subprocess to the run this script with Fontforge Python</span>
@@ -666,6 +697,8 @@ environment.</p>
 <span class="sd">        Path to output directory.</span>
 <span class="sd">    config : str</span>
 <span class="sd">        Path to config file.</span>
+<span class="sd">    metadata : dict</span>
+<span class="sd">        Dictionary containing the metadata (filename, family or style)</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="kn">import</span> <span class="nn">subprocess</span>
     <span class="kn">import</span> <span class="nn">platform</span>
@@ -676,7 +709,13 @@ environment.</p>
             <span class="k">if</span> <span class="n">platform</span><span class="o">.</span><span class="n">system</span><span class="p">()</span> <span class="o">==</span> <span class="s2">&quot;Windows&quot;</span>
             <span class="k">else</span> <span class="p">[</span><span class="s2">&quot;fontforge&quot;</span><span class="p">,</span> <span class="s2">&quot;-script&quot;</span><span class="p">]</span>
         <span class="p">)</span>
-        <span class="o">+</span> <span class="p">[</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="vm">__file__</span><span class="p">),</span> <span class="n">config</span><span class="p">,</span> <span class="n">directory</span><span class="p">,</span> <span class="n">outdir</span><span class="p">]</span>
+        <span class="o">+</span> <span class="p">[</span>
+            <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="vm">__file__</span><span class="p">),</span>
+            <span class="n">config</span><span class="p">,</span>
+            <span class="n">directory</span><span class="p">,</span>
+            <span class="n">outdir</span><span class="p">,</span>
+            <span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">metadata</span><span class="p">),</span>
+        <span class="p">]</span>
     <span class="p">)</span>
 </code></pre></div>
         </details>
@@ -757,14 +796,6 @@ environment.</p>
         <span class="o">+</span> <span class="n">os</span><span class="o">.</span><span class="n">sep</span>
         <span class="o">+</span> <span class="p">(</span><span class="n">filename</span> <span class="o">+</span> <span class="s2">&quot;.ttf&quot;</span> <span class="k">if</span> <span class="ow">not</span> <span class="n">filename</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s2">&quot;.ttf&quot;</span><span class="p">)</span> <span class="k">else</span> <span class="n">filename</span><span class="p">)</span>
     <span class="p">)</span>
-
-    <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">outfile</span><span class="p">):</span>
-        <span class="n">outfile</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span>
-            <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">splitext</span><span class="p">(</span><span class="n">outfile</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
-            <span class="o">+</span> <span class="s2">&quot;-&quot;</span>
-            <span class="o">+</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">splitext</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">basename</span><span class="p">(</span><span class="n">config_file</span><span class="p">))[</span><span class="mi">0</span><span class="p">]</span>
-            <span class="o">+</span> <span class="s2">&quot;.ttf&quot;</span>
-        <span class="p">)</span>
 
     <span class="k">while</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">outfile</span><span class="p">):</span>
         <span class="n">outfile</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">splitext</span><span class="p">(</span><span class="n">outfile</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="s2">&quot; (1).ttf&quot;</span>
@@ -935,12 +966,15 @@ environment.</p>
     <span class="sd">&quot;&quot;&quot;Set metadata of the font from config.&quot;&quot;&quot;</span>
     <span class="n">props</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s2">&quot;props&quot;</span><span class="p">]</span>
     <span class="n">lang</span> <span class="o">=</span> <span class="n">props</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;lang&quot;</span><span class="p">,</span> <span class="s2">&quot;English (US)&quot;</span><span class="p">)</span>
-    <span class="n">family</span> <span class="o">=</span> <span class="n">props</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;filename&quot;</span><span class="p">,</span> <span class="s2">&quot;Example&quot;</span><span class="p">)</span>
-    <span class="n">style</span> <span class="o">=</span> <span class="n">props</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;style&quot;</span><span class="p">,</span> <span class="s2">&quot;Regular&quot;</span><span class="p">)</span>
+    <span class="n">fontname</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">metadata</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;filename&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span> <span class="ow">or</span> <span class="n">props</span><span class="o">.</span><span class="n">get</span><span class="p">(</span>
+        <span class="s2">&quot;filename&quot;</span><span class="p">,</span> <span class="s2">&quot;Example&quot;</span>
+    <span class="p">)</span>
+    <span class="n">family</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">metadata</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;family&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span> <span class="ow">or</span> <span class="n">fontname</span>
+    <span class="n">style</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">metadata</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;style&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span> <span class="ow">or</span> <span class="n">props</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;style&quot;</span><span class="p">,</span> <span class="s2">&quot;Regular&quot;</span><span class="p">)</span>
 
-    <span class="bp">self</span><span class="o">.</span><span class="n">font</span><span class="o">.</span><span class="n">familyname</span> <span class="o">=</span> <span class="n">family</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">font</span><span class="o">.</span><span class="n">fontname</span> <span class="o">=</span> <span class="n">family</span> <span class="o">+</span> <span class="s2">&quot;-&quot;</span> <span class="o">+</span> <span class="n">style</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">font</span><span class="o">.</span><span class="n">fullname</span> <span class="o">=</span> <span class="n">family</span> <span class="o">+</span> <span class="s2">&quot; &quot;</span> <span class="o">+</span> <span class="n">style</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">font</span><span class="o">.</span><span class="n">familyname</span> <span class="o">=</span> <span class="n">fontname</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">font</span><span class="o">.</span><span class="n">fontname</span> <span class="o">=</span> <span class="n">fontname</span> <span class="o">+</span> <span class="s2">&quot;-&quot;</span> <span class="o">+</span> <span class="n">style</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">font</span><span class="o">.</span><span class="n">fullname</span> <span class="o">=</span> <span class="n">fontname</span> <span class="o">+</span> <span class="s2">&quot; &quot;</span> <span class="o">+</span> <span class="n">style</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">font</span><span class="o">.</span><span class="n">encoding</span> <span class="o">=</span> <span class="n">props</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;encoding&quot;</span><span class="p">,</span> <span class="s2">&quot;UnicodeFull&quot;</span><span class="p">)</span>
 
     <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">props</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
@@ -948,6 +982,14 @@ environment.</p>
             <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">v</span><span class="p">,</span> <span class="nb">list</span><span class="p">):</span>
                 <span class="n">v</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">v</span><span class="p">)</span>
             <span class="nb">setattr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">font</span><span class="p">,</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;sfnt_names&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s2">&quot;sfnt_names&quot;</span><span class="p">][</span><span class="s2">&quot;Family&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">family</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s2">&quot;sfnt_names&quot;</span><span class="p">][</span><span class="s2">&quot;Fullname&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">family</span> <span class="o">+</span> <span class="s2">&quot; &quot;</span> <span class="o">+</span> <span class="n">style</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s2">&quot;sfnt_names&quot;</span><span class="p">][</span><span class="s2">&quot;PostScriptName&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">family</span> <span class="o">+</span> <span class="s2">&quot;-&quot;</span> <span class="o">+</span> <span class="n">style</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s2">&quot;sfnt_names&quot;</span><span class="p">][</span><span class="s2">&quot;SubFamily&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">style</span>
+
+    <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s2">&quot;sfnt_names&quot;</span><span class="p">][</span><span class="s2">&quot;UniqueID&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">family</span> <span class="o">+</span> <span class="s2">&quot; &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">uuid</span><span class="o">.</span><span class="n">uuid4</span><span class="p">())</span>
 
     <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;sfnt_names&quot;</span><span class="p">,</span> <span class="p">{})</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">font</span><span class="o">.</span><span class="n">appendSFNTName</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">lang</span><span class="p">),</span> <span class="nb">str</span><span class="p">(</span><span class="n">k</span><span class="p">),</span> <span class="nb">str</span><span class="p">(</span><span class="n">v</span><span class="p">))</span>
@@ -1006,10 +1048,12 @@ environment.</p>
     <div class="md-footer-meta__inner md-grid">
       <div class="md-footer-copyright">
         
-        Made with
-        <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
-          Material for MkDocs
-        </a>
+        
+          Made with
+          <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+            Material for MkDocs
+          </a>
+        
         
       </div>
       
@@ -1021,10 +1065,10 @@ environment.</p>
     <div class="md-dialog" data-md-component="dialog">
       <div class="md-dialog__inner md-typeset"></div>
     </div>
-    <script id="__config" type="application/json">{"base": "../..", "features": ["navigation.sections"], "translations": {"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing", "select.version.title": "Select version"}, "search": "../../assets/javascripts/workers/search.477d984a.min.js", "version": null}</script>
+    <script id="__config" type="application/json">{"base": "../..", "features": ["navigation.sections"], "translations": {"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing", "select.version.title": "Select version"}, "search": "../../assets/javascripts/workers/search.fcfe8b6d.min.js", "version": null}</script>
     
     
-      <script src="../../assets/javascripts/bundle.82b56eb2.min.js"></script>
+      <script src="../../assets/javascripts/bundle.b1047164.min.js"></script>
       
     
   </body>
