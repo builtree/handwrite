@@ -25,7 +25,9 @@ setuptools.setup(
             "pytkdocs[numpy-style]",
         ]
     },
-    entry_points={"console_scripts": ["handwrite = handwrite.cli:main"],},
+    entry_points={
+        "console_scripts": ["handwrite = handwrite.cli:main"],
+    },
     include_package_data=True,
     classifiers=[
         "Programming Language :: Python :: 3",
