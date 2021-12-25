@@ -15,13 +15,13 @@
     ```
 
     ???+ warning
-        Since the PPA for fontforge is no longer maintained, apt might not work for some users.
-        The preferred way to install is using the AppImage from: https://fontforge.org/en-US/downloads/
+    Since the PPA for fontforge is no longer maintained, apt might not work for some users.
+    The preferred way to install is using the AppImage from: https://fontforge.org/en-US/downloads/
 
 3. Clone the repository or your fork
 
     ```console
-    git clone https://github.com/cod-ed/handwrite
+    git clone https://github.com/builtree/handwrite
     ```
 
 4. (Optional) Make a virtual environment and activate it
@@ -60,7 +60,7 @@ You are ready to go!
 3. Clone the repository or your fork
 
     ```console
-    git clone https://github.com/cod-ed/handwrite
+    git clone https://github.com/builtree/handwrite
     ```
 
 4. (Optional) Make a virtual environment and activate it

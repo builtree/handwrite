@@ -1,16 +1,16 @@
 <p align="center">
-    <a href="https://github.com/cod-ed/handwrite">
-        <img src="https://raw.githubusercontent.com/cod-ed/assets/handwrite/logo_white_background.svg" width=50%>
+    <a href="https://github.com/builtree/handwrite">
+        <img src="https://raw.githubusercontent.com/builtree/assets/handwrite/logo_white_background.svg" width=50%>
         </img>
     </a>
 </p>
 
-[![Tests](https://github.com/cod-ed/handwrite/workflows/Tests/badge.svg)](https://github.com/cod-ed/handwrite/actions)
+[![Tests](https://github.com/builtree/handwrite/workflows/Tests/badge.svg)](https://github.com/builtree/handwrite/actions)
 [![PyPI version](https://img.shields.io/pypi/v/handwrite.svg)](https://pypi.org/project/handwrite)
 [![Gitter chat](https://badges.gitter.im/gitterHQ/gitter.svg)](https://gitter.im/codEd-org/handwrite)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
-[![CodeQL](https://github.com/cod-ed/handwrite/actions/workflows/codeql-analysis.yml/badge.svg)](https://github.com/cod-ed/handwrite/actions/workflows/codeql-analysis.yml)
+[![CodeQL](https://github.com/builtree/handwrite/actions/workflows/codeql-analysis.yml/badge.svg)](https://github.com/builtree/handwrite/actions/workflows/codeql-analysis.yml)
 
 # Handwrite - Type in your Handwriting!
 
@@ -19,7 +19,7 @@ Is your written work messy, cos you think faster than you can write?
 Now, you can finish them with the ease of typing in your own font!
 
 <p align="center">
-        <img src="https://raw.githubusercontent.com/cod-ed/assets/handwrite/handwrite.gif">
+        <img src="https://raw.githubusercontent.com/builtree/assets/handwrite/handwrite.gif">
         </img>
 </p>
 

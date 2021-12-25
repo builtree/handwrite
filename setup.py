@@ -11,7 +11,7 @@ setuptools.setup(
     description="Convert text to custom handwriting",
     long_description=long_description,
     long_description_content_type="text/markdown",
-    url="https://github.com/cod-ed/handwrite",
+    url="https://github.com/builtree/handwrite",
     packages=setuptools.find_packages(),
     install_requires=["opencv-python", "Pillow"],
     extras_require={
@@ -25,9 +25,7 @@ setuptools.setup(
             "pytkdocs[numpy-style]",
         ]
     },
-    entry_points={
-        "console_scripts": ["handwrite = handwrite.cli:main"],
-    },
+    entry_points={"console_scripts": ["handwrite = handwrite.cli:main"],},
     include_package_data=True,
     classifiers=[
         "Programming Language :: Python :: 3",
