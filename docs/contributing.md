@@ -15,8 +15,8 @@
     ```
 
     ???+ warning
-    Since the PPA for fontforge is no longer maintained, apt might not work for some users.
-    The preferred way to install is using the AppImage from: https://fontforge.org/en-US/downloads/
+        Since the PPA for fontforge is no longer maintained, apt might not work for some users.
+        The preferred way to install is using the AppImage from: https://fontforge.org/en-US/downloads/
 
 3. Clone the repository or your fork
 

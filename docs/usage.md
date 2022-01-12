@@ -27,7 +27,8 @@ Your form should look like this:
 3.  (Optional) Config file containing custom options for your font can also be passed using
     the `--config [CONFIG FILE]` argument.
 
-    ???+ note - If you expicitly pass the metadata (filename, family or style) as CLI arguments, they are given a preference over the default config file data.
+    ???+ note 
+        - If you expicitly pass the metadata (filename, family or style) as CLI arguments, they are given a preference over the default config file data.
 
          - If no config file is provided for an input then the [default config file](https://github.com/builtree/handwrite/blob/main/handwrite/default.json) is used.
 
