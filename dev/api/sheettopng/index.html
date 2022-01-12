@@ -444,6 +444,154 @@
 
       <p>Converter class to convert input sample sheet to character PNGs.</p>
 
+        <details class="quote">
+          <summary>Source code in <code>handwrite/sheettopng.py</code></summary>
+          <div class="codehilite"><pre><span></span><code><span class="k">class</span> <span class="nc">SHEETtoPNG</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;Converter class to convert input sample sheet to character PNGs.&quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">convert</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sheet</span><span class="p">,</span> <span class="n">characters_dir</span><span class="p">,</span> <span class="n">config</span><span class="p">,</span> <span class="n">cols</span><span class="o">=</span><span class="mi">8</span><span class="p">,</span> <span class="n">rows</span><span class="o">=</span><span class="mi">10</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Convert a sheet of sample writing input to a custom directory structure of PNGs.</span>
+
+<span class="sd">        Detect all characters in the sheet as a separate contours and convert each to</span>
+<span class="sd">        a PNG image in a temp/user provided directory.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        sheet : str</span>
+<span class="sd">            Path to the sheet file to be converted.</span>
+<span class="sd">        characters_dir : str</span>
+<span class="sd">            Path to directory to save characters in.</span>
+<span class="sd">        config: str</span>
+<span class="sd">            Path to config file.</span>
+<span class="sd">        cols : int, default=8</span>
+<span class="sd">            Number of columns of expected contours. Defaults to 8 based on the default sample.</span>
+<span class="sd">        rows : int, default=10</span>
+<span class="sd">            Number of rows of expected contours. Defaults to 10 based on the default sample.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">config</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+            <span class="n">threshold_value</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">f</span><span class="p">)</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;threshold_value&quot;</span><span class="p">,</span> <span class="mi">200</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isdir</span><span class="p">(</span><span class="n">sheet</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">IsADirectoryError</span><span class="p">(</span><span class="s2">&quot;Sheet parameter should not be a directory.&quot;</span><span class="p">)</span>
+        <span class="n">characters</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">detect_characters</span><span class="p">(</span>
+            <span class="n">sheet</span><span class="p">,</span> <span class="n">threshold_value</span><span class="p">,</span> <span class="n">cols</span><span class="o">=</span><span class="n">cols</span><span class="p">,</span> <span class="n">rows</span><span class="o">=</span><span class="n">rows</span>
+        <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">save_images</span><span class="p">(</span>
+            <span class="n">characters</span><span class="p">,</span>
+            <span class="n">characters_dir</span><span class="p">,</span>
+        <span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">detect_characters</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sheet_image</span><span class="p">,</span> <span class="n">threshold_value</span><span class="p">,</span> <span class="n">cols</span><span class="o">=</span><span class="mi">8</span><span class="p">,</span> <span class="n">rows</span><span class="o">=</span><span class="mi">10</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Detect contours on the input image and filter them to get only characters.</span>
+
+<span class="sd">        Uses opencv to threshold the image for better contour detection. After finding all</span>
+<span class="sd">        contours, they are filtered based on area, cropped and then sorted sequentially based</span>
+<span class="sd">        on coordinates. Finally returs the cols*rows top candidates for being the character</span>
+<span class="sd">        containing contours.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        sheet_image : str</span>
+<span class="sd">            Path to the sheet file to be converted.</span>
+<span class="sd">        threshold_value : int</span>
+<span class="sd">            Value to adjust thresholding of the image for better contour detection.</span>
+<span class="sd">        cols : int, default=8</span>
+<span class="sd">            Number of columns of expected contours. Defaults to 8 based on the default sample.</span>
+<span class="sd">        rows : int, default=10</span>
+<span class="sd">            Number of rows of expected contours. Defaults to 10 based on the default sample.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        sorted_characters : list of list</span>
+<span class="sd">            Final rows*cols contours in form of list of list arranged as:</span>
+<span class="sd">            sorted_characters[x][y] denotes contour at x, y position in the input grid.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># TODO Raise errors and suggest where the problem might be</span>
+
+        <span class="c1"># Read the image and convert to grayscale</span>
+        <span class="n">image</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">imread</span><span class="p">(</span><span class="n">sheet_image</span><span class="p">)</span>
+        <span class="n">gray</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">cvtColor</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="n">cv2</span><span class="o">.</span><span class="n">COLOR_BGR2GRAY</span><span class="p">)</span>
+
+        <span class="c1"># Threshold and filter the image for better contour detection</span>
+        <span class="n">_</span><span class="p">,</span> <span class="n">thresh</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">threshold</span><span class="p">(</span><span class="n">gray</span><span class="p">,</span> <span class="n">threshold_value</span><span class="p">,</span> <span class="mi">255</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="n">close_kernel</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">getStructuringElement</span><span class="p">(</span><span class="n">cv2</span><span class="o">.</span><span class="n">MORPH_RECT</span><span class="p">,</span> <span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">))</span>
+        <span class="n">close</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">morphologyEx</span><span class="p">(</span><span class="n">thresh</span><span class="p">,</span> <span class="n">cv2</span><span class="o">.</span><span class="n">MORPH_CLOSE</span><span class="p">,</span> <span class="n">close_kernel</span><span class="p">,</span> <span class="n">iterations</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+
+        <span class="c1"># Search for contours.</span>
+        <span class="n">contours</span><span class="p">,</span> <span class="n">h</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">findContours</span><span class="p">(</span>
+            <span class="n">close</span><span class="p">,</span> <span class="n">cv2</span><span class="o">.</span><span class="n">RETR_EXTERNAL</span><span class="p">,</span> <span class="n">cv2</span><span class="o">.</span><span class="n">CHAIN_APPROX_SIMPLE</span>
+        <span class="p">)</span>
+
+        <span class="c1"># Filter contours based on number of sides and then reverse sort by area.</span>
+        <span class="n">contours</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span>
+            <span class="nb">filter</span><span class="p">(</span>
+                <span class="k">lambda</span> <span class="n">cnt</span><span class="p">:</span> <span class="nb">len</span><span class="p">(</span>
+                    <span class="n">cv2</span><span class="o">.</span><span class="n">approxPolyDP</span><span class="p">(</span><span class="n">cnt</span><span class="p">,</span> <span class="mf">0.01</span> <span class="o">*</span> <span class="n">cv2</span><span class="o">.</span><span class="n">arcLength</span><span class="p">(</span><span class="n">cnt</span><span class="p">,</span> <span class="kc">True</span><span class="p">),</span> <span class="kc">True</span><span class="p">)</span>
+                <span class="p">)</span>
+                <span class="o">==</span> <span class="mi">4</span><span class="p">,</span>
+                <span class="n">contours</span><span class="p">,</span>
+            <span class="p">),</span>
+            <span class="n">key</span><span class="o">=</span><span class="n">cv2</span><span class="o">.</span><span class="n">contourArea</span><span class="p">,</span>
+            <span class="n">reverse</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+        <span class="p">)</span>
+
+        <span class="c1"># Calculate the bounding of the first contour and approximate the height</span>
+        <span class="c1"># and width for final cropping.</span>
+        <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">w</span><span class="p">,</span> <span class="n">h</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">boundingRect</span><span class="p">(</span><span class="n">contours</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+        <span class="n">space_h</span><span class="p">,</span> <span class="n">space_w</span> <span class="o">=</span> <span class="mi">7</span> <span class="o">*</span> <span class="n">h</span> <span class="o">//</span> <span class="mi">16</span><span class="p">,</span> <span class="mi">7</span> <span class="o">*</span> <span class="n">w</span> <span class="o">//</span> <span class="mi">16</span>
+
+        <span class="c1"># Since amongst all the contours, the expected case is that the 4 sided contours</span>
+        <span class="c1"># containing the characters should have the maximum area, so we loop through the first</span>
+        <span class="c1"># rows*colums contours and add them to final list after cropping.</span>
+        <span class="n">characters</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">rows</span> <span class="o">*</span> <span class="n">cols</span><span class="p">):</span>
+            <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">w</span><span class="p">,</span> <span class="n">h</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">boundingRect</span><span class="p">(</span><span class="n">contours</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+            <span class="n">cx</span><span class="p">,</span> <span class="n">cy</span> <span class="o">=</span> <span class="n">x</span> <span class="o">+</span> <span class="n">w</span> <span class="o">//</span> <span class="mi">2</span><span class="p">,</span> <span class="n">y</span> <span class="o">+</span> <span class="n">h</span> <span class="o">//</span> <span class="mi">2</span>
+
+            <span class="n">roi</span> <span class="o">=</span> <span class="n">image</span><span class="p">[</span><span class="n">cy</span> <span class="o">-</span> <span class="n">space_h</span> <span class="p">:</span> <span class="n">cy</span> <span class="o">+</span> <span class="n">space_h</span><span class="p">,</span> <span class="n">cx</span> <span class="o">-</span> <span class="n">space_w</span> <span class="p">:</span> <span class="n">cx</span> <span class="o">+</span> <span class="n">space_w</span><span class="p">]</span>
+            <span class="n">characters</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="n">roi</span><span class="p">,</span> <span class="n">cx</span><span class="p">,</span> <span class="n">cy</span><span class="p">])</span>
+
+        <span class="c1"># Now we have the characters but since they are all mixed up we need to position them.</span>
+        <span class="c1"># Sort characters based on &#39;y&#39; coordinate and group them by number of rows at a time. Then</span>
+        <span class="c1"># sort each group based on the &#39;x&#39; coordinate.</span>
+        <span class="n">characters</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span>
+        <span class="n">sorted_characters</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">rows</span><span class="p">):</span>
+            <span class="n">sorted_characters</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span>
+                <span class="nb">sorted</span><span class="p">(</span><span class="n">characters</span><span class="p">[</span><span class="n">cols</span> <span class="o">*</span> <span class="n">k</span> <span class="p">:</span> <span class="n">cols</span> <span class="o">*</span> <span class="p">(</span><span class="n">k</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)],</span> <span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+            <span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">sorted_characters</span>
+
+    <span class="k">def</span> <span class="nf">save_images</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">characters</span><span class="p">,</span> <span class="n">characters_dir</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Create directory for each character and save as PNG.</span>
+
+<span class="sd">        Creates directory and PNG file for each image as following:</span>
+
+<span class="sd">            characters_dir/ord(character)/ord(character).png  (SINGLE SHEET INPUT)</span>
+<span class="sd">            characters_dir/sheet_filename/ord(character)/ord(character).png  (MULTIPLE SHEETS INPUT)</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        characters : list of list</span>
+<span class="sd">            Sorted list of character images each inner list representing a row of images.</span>
+<span class="sd">        characters_dir : str</span>
+<span class="sd">            Path to directory to save characters in.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="n">characters_dir</span><span class="p">,</span> <span class="n">exist_ok</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+        <span class="c1"># Create directory for each character and save the png for the characters</span>
+        <span class="c1"># Structure (single sheet): UserProvidedDir/ord(character)/ord(character).png</span>
+        <span class="c1"># Structure (multiple sheets): UserProvidedDir/sheet_filename/ord(character)/ord(character).png</span>
+        <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">images</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">characters</span><span class="p">):</span>
+            <span class="n">character</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">characters_dir</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">ALL_CHARS</span><span class="p">[</span><span class="n">k</span><span class="p">]))</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">character</span><span class="p">):</span>
+                <span class="n">os</span><span class="o">.</span><span class="n">mkdir</span><span class="p">(</span><span class="n">character</span><span class="p">)</span>
+            <span class="n">cv2</span><span class="o">.</span><span class="n">imwrite</span><span class="p">(</span>
+                <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">character</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">ALL_CHARS</span><span class="p">[</span><span class="n">k</span><span class="p">])</span> <span class="o">+</span> <span class="s2">&quot;.png&quot;</span><span class="p">),</span>
+                <span class="n">images</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span>
+            <span class="p">)</span>
+</code></pre></div>
+        </details>
 
 
 
