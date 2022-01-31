@@ -98,7 +98,8 @@ You are ready to go!
 ```bash
 pip install mkdocs pymdown-extensions mkdocs-material mkdocs-git-revision-date-localized-plugin
 ```
-2. Check the installations by:
+
+2. Check the installations by executing this command:
 ```bash
 mkdocs --version
 ```
