@@ -94,7 +94,7 @@ You are ready to go!
 
 ## Setting Up Docs
 
-1. If you haven't done a developer install of handwrite install mkdocs and its requirements
+1. If you haven't done a developer install of handwrite, you will need to install mkdocs and its requirements: 
 ```bash
 pip install mkdocs pymdown-extensions mkdocs-material mkdocs-git-revision-date-localized-plugin
 ```
