@@ -110,7 +110,6 @@ mkdocs --version
 ```bash
 mkdocs serve --dev-addr 127.0.0.1:8000
 ```
-{== MkDocs supports live reload so you don't have to run the server again and again. Just make your changes in the docs and you'll see the change immediately. ==}
-4. All the documentation is present in the `docs` directory.
+{== MkDocs supports live reload so you don't have to run the server again and again. Just save the changes in the docs and you'll see the change immediately. ==}
 
----
+4. All the documentation is present in the `docs` directory.
