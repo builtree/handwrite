@@ -89,3 +89,28 @@ You are ready to go!
     ```
 
 You are ready to go!
+
+
+
+## Setting Up Docs
+
+1. If you haven't done a developer install of handwrite, you will need to install mkdocs and its requirements: 
+```bash
+pip install mkdocs pymdown-extensions mkdocs-material mkdocs-git-revision-date-localized-plugin
+```
+
+2. Check the installations by executing this command:
+```bash
+mkdocs --version
+```
+
+    !!! warning ""
+        If this doesn't work, try restarting the terminal
+
+3. Use the below command to host the documentation on local server
+```bash
+mkdocs serve --dev-addr 127.0.0.1:8000
+```
+{== MkDocs supports live reload so you don't have to run the server again and again. Just save the changes in the docs and you'll see the change immediately. ==}
+
+4. All the documentation is present in the `docs` directory.
