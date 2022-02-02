@@ -248,6 +248,13 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#setting-up-docs" class="md-nav__link">
+    Setting Up Docs
+  </a>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -392,6 +399,13 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#setting-up-docs" class="md-nav__link">
+    Setting Up Docs
+  </a>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -491,6 +505,31 @@ The preferred way to install is using the AppImage from: <a href="https://fontfo
 </li>
 </ol>
 <p>You are ready to go!</p>
+<h2 id="setting-up-docs">Setting Up Docs<a class="headerlink" href="#setting-up-docs" title="Permanent link">&para;</a></h2>
+<ol>
+<li>
+<p>If you haven't done a developer install of handwrite, you will need to install mkdocs and its requirements: 
+<div class="highlight"><pre><span></span><code>pip install mkdocs pymdown-extensions mkdocs-material mkdocs-git-revision-date-localized-plugin
+</code></pre></div></p>
+</li>
+<li>
+<p>Check the installations by executing this command:
+<div class="highlight"><pre><span></span><code>mkdocs --version
+</code></pre></div></p>
+<div class="admonition warning">
+<p>If this doesn't work, try restarting the terminal</p>
+</div>
+</li>
+<li>
+<p>Use the below command to host the documentation on local server
+<div class="highlight"><pre><span></span><code>mkdocs serve --dev-addr <span class="m">127</span>.0.0.1:8000
+</code></pre></div>
+<mark class="critic"> MkDocs supports live reload so you don't have to run the server again and again. Just save the changes in the docs and you'll see the change immediately. </mark></p>
+</li>
+<li>
+<p>All the documentation is present in the <code>docs</code> directory.</p>
+</li>
+</ol>
                 
               
               
