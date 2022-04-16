@@ -20,7 +20,7 @@ jobs:
       - name: Install dependencies
         run: |
           python3 -m pip install --upgrade pip
-          python3 -m pip install -e .[dev]
+          python3 -m pip install -e .[dev] jinja2<3.1.0
       - name: Git setup and update
         run: |
           git config user.name "GitHub Action" && git config user.email "github-action@github.com"
