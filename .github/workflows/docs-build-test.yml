@@ -13,6 +13,7 @@ jobs:
       - name: Install dependencies
         run: |
           python3 -m pip install --upgrade pip
-          python3 -m pip install -e .[dev] jinja2<3.1.0
+          python3 -m pip install -e .[dev]
+          python3 -m pip install jinja2<3.1.0
       - name: Try Docs build
         run: mkdocs build
